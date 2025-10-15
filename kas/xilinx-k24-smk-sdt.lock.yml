@@ -1,0 +1,44 @@
+header:
+    version: 14
+overrides:
+    repos:
+        poky:
+            commit: dcb242eb1926f393fb08738875232824e69e11e4
+        meta-openembedded:
+            commit: 6c9f1f8d4538119803bf793747b65e4d23c33544
+        meta-arm:
+            commit: 3cadb81ffaa9f03b92e302843cb22a9cd41df34b
+        meta-ros:
+            commit: ff76fa90fb66d0b83238d99f882c60f2373eb875
+        meta-virtualization:
+            commit: c14460de91ce0858bafb0dd73ddf4d873c53c60f
+        meta-security:
+            commit: bc865c5276c2ab4031229916e8d7c20148dfbac3
+        meta-rauc:
+            commit: 76b97796be1d0303436835e56d85d7316a1029d9
+        meta-openamp:
+            commit: e44e4a3b4abe9cc5fdfe75c43181ba82750f6865
+        meta-qt5:
+            commit: eb828418264a49b8d00035cb3d7b12fcea3be801
+        meta-aws:
+            commit: ae19378f45ad92510a7242b89febc99f7de3d88c
+        meta-jupyter:
+            commit: 6b9b2542f3e52d30f5100747ce312dc46791c5cc
+        meta-xilinx:
+            commit: ce9fb7aa87f9cd1c74cf3f2619227ccf536ed2bb
+        meta-xilinx-tools:
+            commit: 5545108b2e737b7920c2f5e0f766ebe300c2de19
+        meta-xilinx-tsn:
+            commit: db643704b5883091dc837a3a1a203ce44bec4a7b
+        meta-amd-adaptive-socs:
+            commit: 31792ed6569eb32a2f76f02647a165bae1ce5d7c
+        meta-petalinux:
+            commit: 90da27262fec73f66af71115afc7fa654e974815
+        meta-kria:
+            commit: d26189f4bec87dc56af95324254540a7f2634aeb
+        meta-mingw:
+            commit: bd9fef71ec005be3c3a6d7f8b99d8116daf70c4f
+        meta-vitis:
+            commit: 562adefd277483afb2eb4a9402f6a6ebbd653bba
+        meta-embedded-plus:
+            commit: 46c4ae1a972b8e3cbb4cb52f18496bd9fb58c76f

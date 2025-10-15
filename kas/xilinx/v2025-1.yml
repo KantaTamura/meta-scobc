@@ -1,0 +1,226 @@
+# NOTE: This configuration file is a restructured version based on yocto-manifests.
+# References:
+# - https://github.com/Xilinx/yocto-manifests
+#     - `default.xml`
+# - https://github.com/Xilinx/meta-petalinux
+#     - `conf/templates/default/bblayers.conf.sample`
+#     - `conf/templates/default/local.conf.sample`
+
+header:
+  version: 19
+
+defaults:
+  repos:
+    branch: rel-v2025.1
+
+distro: petalinux
+
+machine: qemu-zynqmp
+
+repos:
+  poky:
+    url: https://github.com/Xilinx/poky
+    path: sources/poky
+    layers:
+      meta:
+      meta-poky:
+
+  meta-openembedded:
+    url: https://github.com/Xilinx/meta-openembedded
+    path: sources/meta-openembedded
+    layers:
+      meta-perl:
+      meta-python:
+      meta-filesystems:
+      meta-gnome:
+      meta-multimedia:
+      meta-networking:
+      meta-webserver:
+      meta-xfce:
+      meta-initramfs:
+      meta-oe:
+
+  meta-arm:
+    url: https://github.com/Xilinx/meta-arm
+    path: sources/meta-arm
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+
+  meta-ros:
+    url: https://github.com/Xilinx/meta-ros
+    path: sources/meta-ros
+    layers:
+      meta-ros-common:
+      meta-ros2:
+      meta-ros2-jazzy:
+
+  meta-virtualization:
+    url: https://github.com/Xilinx/meta-virtualization
+    path: sources/meta-virtualization
+    layers:
+      .:
+
+  meta-security:
+    url: https://github.com/Xilinx/meta-security
+    path: sources/meta-security
+    layers:
+      .:
+      meta-tpm:
+
+  meta-rauc:
+    url: https://github.com/Xilinx/meta-rauc
+    path: sources/meta-rauc
+    layers:
+      .:
+
+  meta-openamp:
+    url: https://github.com/Xilinx/meta-openamp
+    path: sources/meta-openamp
+    layers:
+      .:
+
+  meta-qt5:
+    url: https://github.com/Xilinx/meta-qt5
+    path: sources/meta-qt5
+    layers:
+      .:
+
+  meta-aws:
+    url: https://github.com/Xilinx/meta-aws
+    path: sources/meta-aws
+    layers:
+      .:
+
+  meta-jupyter:
+    url: https://github.com/Xilinx/meta-jupyter
+    path: sources/meta-jupyter
+    layers:
+      .:
+
+  meta-xilinx:
+    url: https://github.com/Xilinx/meta-xilinx
+    path: sources/meta-xilinx
+    layers:
+      meta-microblaze:
+      meta-xilinx-core:
+      meta-xilinx-standalone:
+      meta-xilinx-standalone-sdt:
+      meta-xilinx-bsp:
+      meta-xilinx-vendor:
+      meta-xilinx-virtualization:
+      meta-xilinx-mali400:
+      meta-xilinx-demos:
+      meta-xilinx-multimedia:
+      meta-xilinx-contrib:
+
+  meta-xilinx-tools:
+    url: https://github.com/Xilinx/meta-xilinx-tools
+    path: sources/meta-xilinx-tools
+    layers:
+      .:
+
+  meta-xilinx-tsn:
+    url: https://github.com/Xilinx/meta-xilinx-tsn
+    path: sources/meta-xilinx-tsn
+    layers:
+      .:
+
+  meta-amd-adaptive-socs:
+    url: https://github.com/Xilinx/meta-amd-adaptive-socs
+    path: sources/meta-amd-adaptive-socs
+    layers:
+      meta-amd-adaptive-socs-core:
+      meta-amd-adaptive-socs-bsp:
+
+  meta-petalinux:
+    url: https://github.com/Xilinx/meta-petalinux
+    path: sources/meta-petalinux
+    layers:
+      .:
+
+  meta-kria:
+    url: https://github.com/Xilinx/meta-kria
+    path: sources/meta-kria
+    layers:
+      .:
+
+  meta-mingw:
+    url: https://github.com/Xilinx/meta-mingw
+    path: sources/meta-mingw
+    layers:
+      .: disabled
+
+  meta-vitis:
+    url: https://github.com/Xilinx/meta-vitis
+    path: sources/meta-vitis
+    layers:
+      .: disabled
+
+  meta-embedded-plus:
+    url: https://github.com/Xilinx/meta-embedded-plus
+    path: sources/meta-embedded-plus
+    layers:
+      .: disabled
+
+local_conf_header:
+  confver: |
+    CONF_VERSION = "2"
+
+  package: |
+    PACKAGE_CLASSES ?= "package_rpm"
+
+  features: |
+    USER_CLASSES ?= "buildstats"
+
+  patchresolve: |
+    PATCHRESOLVE = "noop"
+
+  prservice: |
+    PRSERV_HOST = "localhost:0"
+
+  qemu: |
+    PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+
+  hash: |
+    BB_HASHSERVE = ""
+    BB_SIGNATURE_HANDLER = "OEBasicHash"
+
+  fetcher: |
+    CONNECTIVITY_CHECK_URIS ?= ""
+    BB_GENERATE_MIRROR_TARBALLS ?= "1"
+
+  licenses: |
+    LICENSE_CREATE_PACKAGE = "1"
+    COPY_LIC_MANIFEST = "1"
+    LICENSE_FLAGS_ACCEPTED = " \
+            commercial_${MLPREFIX}ffmpeg \
+            commercial_${MLPREFIX}x264 \
+            commercial_${MLPREFIX}gstreamer1.0-omx \
+            commercial_${MLPREFIX}libomxil \
+            commercial_${MLPREFIX}sox \
+            commercial_${MLPREFIX}faac \
+            commercial_${MLPREFIX}faad2 \
+            xilinx "
+
+  diskmon: |
+    BB_DISKMON_DIRS ??= "\
+        STOPTASKS,${TMPDIR},1G,100K \
+        STOPTASKS,${DL_DIR},1G,100K \
+        STOPTASKS,${SSTATE_DIR},1G,100K \
+        STOPTASKS,/tmp,100M,100K \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K"
+
+  sanity: |
+    SKIP_META_XILINX_MALI400_SANITY_CHECK = "1"
+    SKIP_META_XILINX_STANDALONE_SANITY_CHECK = "1"
+    SKIP_META_XILINX_STANDALONE_SDT_SANITY_CHECK = "1"
+    SKIP_META_XILINX_TOOLS_SANITY_CHECK = "1"
+    SKIP_META_VIRT_SANITY_CHECK = "1"
+    SKIP_META_SECURITY_SANITY_CHECK = "1"
+    SKIP_META_TPM_SANITY_CHECK = "1"
+    SKIP_META_GNOME_SANITY_CHECK = "1"
+    SKIP_META_RAUC_FEATURE_CHECK = "1"

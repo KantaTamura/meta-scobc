@@ -1,3 +1,7 @@
+## bitbake/kas .gitignore
+sources
+build
+
 ## Python .gitignore template
 # Byte-compiled / optimized / DLL files
 __pycache__/

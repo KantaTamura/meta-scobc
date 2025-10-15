@@ -1,0 +1,8 @@
+header:
+  version: 19
+
+machine: k24-smk-sdt
+
+target:
+  - kria-image-full-cmdline
+  - kria-qspi
