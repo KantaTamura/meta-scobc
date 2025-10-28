@@ -1,0 +1,10 @@
+header:
+  version: 19
+
+repos:
+  meta-scobc:
+    url: https://github.com/spacecubics/meta-scobc
+    branch: main
+    path: sources/meta-scobc
+    layers:
+      meta-scobc-v1:
