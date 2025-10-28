@@ -1,0 +1,7 @@
+header:
+  version: 19
+
+local_conf_header:
+  caches: |
+    DL_DIR ?= "/opt/yocto/downloads"
+    SSTATE_DIR ?= "/opt/yocto/sstate-cache"

@@ -1,0 +1,7 @@
+header:
+  version: 19
+
+local_conf_header:
+  caches: |
+    DL_DIR ?= "${@ os.environ.get('YOCTO_DL_DIR', '${TOPDIR}/downloads') }"
+    SSTATE_DIR ?= "${@ os.environ.get('YOCTO_SSTATE_DIR', '${TOPDIR}/sstate-cache') }"

@@ -3,3 +3,4 @@ header:
   includes:
     - kas/xilinx/v2025-1.yml
     - kas/machine/k24-smk-sdt.yml
+    - kas/conf/site.yml
