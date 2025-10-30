@@ -1,5 +1,12 @@
 # meta-scobc
 
+## Prerequisite
+
+> [!IMPORTANT]
+> We store `.xsa` files using [Git LFS][1]. Make sure Git LFS is
+> installed; otherwise you won't get the actual `.xsa` files and the build
+> will fail.
+
 ## Setup
 
 ```
@@ -19,3 +26,5 @@ $ source .venv/bin/activate
 ```
 $ kas build kas/xilinx-k24-smk-sdt.yml:kas/conf/site.opt.yml
 ```
+
+[1]: https://git-lfs.com/
