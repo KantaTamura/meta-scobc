@@ -1,3 +1,5 @@
+# meta-scobc
+
 ## Setup
 
 ```
@@ -7,9 +9,10 @@ $ source .venv/bin/activate
 
 ## Build
 
-```
-$ kas build kas/xilinx-k24-smk-sdt.yml
-```
+|Machine|Build command|
+|-|-|
+|Kria K24 SOM board|`$ kas build kas/xilinx-k24-smk-sdt.yml`|
+|SC-OBC Module V1|`$ kas build kas/scobc-v1.yml`|
 
 ### Faster builds (shared caches)
 
