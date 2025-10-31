@@ -1,0 +1,12 @@
+&usb0 {
+        status = "okay";
+};
+
+&dwc3_0 {
+        status = "okay";
+        dr_mode = "host";
+        maximum-speed = "high-speed";
+        snps,dis_u2_susphy_quirk;
+        snps,dis_u3_susphy_quirk;
+        snps,usb3_lpm_capable;
+};
