@@ -1,0 +1,19 @@
+//#include <dt-bindings/net/ti-dp83867.h>
+
+&gem1 {
+	status = "okay";
+	iommus = <&smmu 0x235>;
+	phy-handle = <&phy>;
+	phy-mode = "rmii";
+
+	mdio: mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		phy: ethernet-phy@1 {
+			compatible = "ethernet-phy-id2000.a231";
+			reg = <1>;
+			ti,rx-internal-delay = <0x8>; //<DP83867_RGMIIDCTL_2_25_NS>;
+			ti,tx-internal-delay = <0xa>; //<DP83867_RGMIIDCTL_2_75_NS>;
+		};
+	};
+};
