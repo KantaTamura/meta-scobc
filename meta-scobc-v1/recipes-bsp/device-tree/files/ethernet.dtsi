@@ -12,8 +12,8 @@
 		phy: ethernet-phy@1 {
 			compatible = "ethernet-phy-id2000.a231";
 			reg = <1>;
-			ti,rx-internal-delay = <0x8>; //<DP83867_RGMIIDCTL_2_25_NS>;
-			ti,tx-internal-delay = <0xa>; //<DP83867_RGMIIDCTL_2_75_NS>;
+			ti,rx-internal-delay = <0x6>; //<DP83867_RGMIIDCTL_1_75_NS>;
+			ti,tx-internal-delay = <0x6>; //<DP83867_RGMIIDCTL_1_75_NS>;
 		};
 	};
 };
