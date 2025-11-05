@@ -4,7 +4,7 @@
 	status = "okay";
 	iommus = <&smmu 0x235>;
 	phy-handle = <&phy>;
-	phy-mode = "rmii";
+	phy-mode = "rgmii-id";
 
 	mdio: mdio {
 		#address-cells = <1>;
