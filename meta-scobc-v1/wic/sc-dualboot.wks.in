@@ -1,0 +1,31 @@
+# Description: Dual-boot WIC layout for SC boards.
+# This layout is intended to be used **only** from the `sc-image-dualboot.bb`
+# recipe, which constructs a unified SD card image combining two complete
+# Linux root filesystems:
+#
+#   - **golden**: a minimal, stable fallback image (read-only / recovery)
+#   - **main**: a development / active image for normal operation
+#
+# Each rootfs contains its own /boot directory.  This wks assigns a separate
+# VFAT boot partition and EXT4 root partition for both sides, allowing each
+# system to boot independently.
+#
+# The layout uses a **GPT (GUID Partition Table)** rather than MBR, since it
+# provides more flexible partition naming and multiple bootable partitions.
+# This makes it easier for U-Boot to identify and manage both "golden" and
+# "main" boot partitions explicitly by their labels.
+#
+# Partition layout:
+#   ┌──────────────────────────────────────────────────────────┐
+#   │  boot_golden  (VFAT, /boot from golden rootfs)           │
+#   │  root_golden  (EXT4, golden full rootfs)                 │
+#   │  boot_main    (VFAT, /boot from main rootfs)             │
+#   │  root_main    (EXT4, main full rootfs)                   │
+#   └──────────────────────────────────────────────────────────┘
+# bootloader --ptable gpt
+
+part boot_golden  --use-label --label bootg --fstype=vfat --align 4 --fixed-size=512M --source rootfs  --rootfs-dir=${ROOTFS_DIR_GOLDEN}/boot --active
+part root_golden  --use-label --label rootg --fstype=ext4 --align 4                   --source rawcopy --sourceparams="file=${DEPLOY_DIR_IMAGE}/sc-image-golden-dev-${MACHINE}.ext4"
+
+part boot_main --use-label --label bootm --fstype=vfat --align 4 --fixed-size=512M --source rootfs  --rootfs-dir=${ROOTFS_DIR_MAIN}/boot --active
+part root_main --use-label --label rootm --fstype=ext4 --align 4                   --source rawcopy --sourceparams="file=${DEPLOY_DIR_IMAGE}/sc-image-main-dev-${MACHINE}.ext4"
