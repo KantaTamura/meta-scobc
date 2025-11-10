@@ -1,7 +1,7 @@
 From ae569c8407f526b0c8979bd77a100bbdbe1ada33 Mon Sep 17 00:00:00 2001
 From: KantaTamura <tkanta496@gmail.com>
 Date: Tue, 4 Nov 2025 07:08:26 +0000
-Subject: [PATCH 2/2] config: added config for dualboot
+Subject: [PATCH 2/4] config: added config for dualboot
 
 Based on `xilinx_versal_virt_defconfig`, this configuration adds
 CONFIG_DISTRO_BOOT_PARTITION_HELPERS support.

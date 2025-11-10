@@ -1,7 +1,7 @@
 From b97d6f7d840630f15fad72c5b087966ce5d4c148 Mon Sep 17 00:00:00 2001
 From: KantaTamura <tkanta496@gmail.com>
 Date: Tue, 4 Nov 2025 06:34:09 +0000
-Subject: [PATCH 1/2] boot: add Kconfig to select boot partition by label
+Subject: [PATCH 1/4] boot: add Kconfig to select boot partition by label
 
 If CONFIG_BOOT_PARTITION_LABEL is set, distro-boot now resolves the boot
 partition by label using `part number ${devtype} ${devnum}

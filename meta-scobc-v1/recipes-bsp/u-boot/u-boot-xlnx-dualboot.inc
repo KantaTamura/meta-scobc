@@ -2,6 +2,8 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " \
     file://0001-boot-add-Kconfig-to-select-boot-partition-by-label.patch \
 	file://0002-config-added-config-for-dualboot.patch \
+    file://0003-cmd-add-non-secure-mb-command-to-read-write-PMC_MULT.patch \
+    file://0004-configs-enable-mb-command-in-dualboot-defconfigs.patch \
 "
 
 # default UBOOT_CONFIG setting
