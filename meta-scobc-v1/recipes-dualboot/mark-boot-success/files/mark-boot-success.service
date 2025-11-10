@@ -1,0 +1,9 @@
+[Unit]
+Description=Mark successful Linux boot by restoring PMC_MULTI_BOOT register
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/mark-boot-success
+StandardOutput=journal
+StandardError=journal

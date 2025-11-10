@@ -1,0 +1,10 @@
+[Unit]
+Description=Run mark-boot-success 1min after Linux boot
+
+[Timer]
+OnBootSec=1min
+Persistent=true
+Unit=mark-boot-success.service
+
+[Install]
+WantedBy=timers.target

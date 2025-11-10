@@ -1,0 +1,49 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+set -exu
+
+MULTI_BOOT_ADDR="0xF1110004"
+DEVMEM=$(command -v devmem || true)
+
+XLOADER_SD_FILE_SYSTEM_VAL=$((0xF0000000))
+XLOADER_MULTIBOOT_OFFSET_MASK=$((0x001FFFFF))
+XLOADER_SD_MAX_BOOT_FILES_LIMIT=$((8192))
+
+log() { printf '%s %s\n' "$(date --iso-8601=seconds)" "$*"; }
+
+if [ -z "$DEVMEM" ]; then
+    echo "ERROR: devmem not found in PATH"
+    exit 2
+fi
+
+cur_raw="$($DEVMEM $MULTI_BOOT_ADDR 2>&1 || true)"
+cur_hex="$(printf '%s\n' "$cur_raw" | grep -oE '0x[0-9a-fA-F]+' | tail -n1 || true)"
+
+if [ -z "$cur_hex" ]; then
+    log "ERROR: cannot parse devmem output: $cur_raw"
+    exit 3
+fi
+
+cur_val=$(( $(printf '%d' "$cur_hex") & 0xFFFFFFFF ))
+cur_file=$((cur_val & XLOADER_MULTIBOOT_OFFSET_MASK))
+
+if [ "$cur_file" -eq 0 ]; then
+    log "INFO: cur_file is 0, cannot decrement further. aborting."
+    exit 0
+fi
+
+new_file=$((cur_file - 1))
+
+if [ "$new_file" -ge "$XLOADER_SD_MAX_BOOT_FILES_LIMIT" ]; then
+    log "ERROR: new_file $new_file exceeds max limit $XLOADER_SD_MAX_BOOT_FILES_LIMIT"
+    exit 4
+fi
+
+new_val=$(( XLOADER_SD_FILE_SYSTEM_VAL | (new_file & XLOADER_MULTIBOOT_OFFSET_MASK) ))
+
+if ! $DEVMEM $MULTI_BOOT_ADDR 32 0x$(printf '%08X' "$new_val") >/dev/null 2>&1; then
+    log "ERROR: devmem write failed"
+    exit 5
+fi
+
+echo "Linux boot successful — restoring PMC_MULTI_BOOT from 0x$(printf '%08X' $cur_val) to 0x$(printf '%08X' $new_val)"
