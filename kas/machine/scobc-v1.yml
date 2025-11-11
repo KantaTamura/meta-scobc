@@ -4,4 +4,4 @@ header:
 machine: scobc-v1
 
 target:
-  - petalinux-image-minimal
+  - sc-image-minimal
