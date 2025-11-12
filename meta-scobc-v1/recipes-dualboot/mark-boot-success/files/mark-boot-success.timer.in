@@ -2,7 +2,7 @@
 Description=Run mark-boot-success 1min after Linux boot
 
 [Timer]
-OnBootSec=1min
+OnBootSec=@ONBOOT_DELAY@
 Persistent=true
 Unit=mark-boot-success.service
 

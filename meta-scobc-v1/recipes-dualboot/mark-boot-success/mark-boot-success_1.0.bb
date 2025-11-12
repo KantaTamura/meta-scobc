@@ -4,12 +4,22 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 SRC_URI = "file://mark-boot-success \
            file://mark-boot-success.service \
-           file://mark-boot-success.timer \
+           file://mark-boot-success.timer.in \
            "
 
 S = "${WORKDIR}"
 
 inherit systemd
+
+MARK_BOOT_SUCCESS_ONBOOT_DELAY ?= "30min"
+
+do_configure() {
+    install -d ${B}
+    cp ${WORKDIR}/mark-boot-success.timer.in ${B}/mark-boot-success.timer
+    sed -i \
+        -e "s|@ONBOOT_DELAY@|${MARK_BOOT_SUCCESS_ONBOOT_DELAY}|g" \
+        ${B}/mark-boot-success.timer
+}
 
 do_install() {
     install -d ${D}${sbindir}
@@ -17,7 +27,7 @@ do_install() {
 
     install -d ${D}${systemd_unitdir}/system
     install -m 0644 ${WORKDIR}/mark-boot-success.service ${D}${systemd_unitdir}/system/
-    install -m 0644 ${WORKDIR}/mark-boot-success.timer ${D}${systemd_unitdir}/system/
+    install -m 0644 ${B}/mark-boot-success.timer ${D}${systemd_unitdir}/system/
 }
 
 FILES:${PN} += "${sbindir}/mark-boot-success \
