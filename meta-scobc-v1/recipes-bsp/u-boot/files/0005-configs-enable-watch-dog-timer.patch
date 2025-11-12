@@ -1,0 +1,36 @@
+From 9b189750d015690f24383650f59103423387bac4 Mon Sep 17 00:00:00 2001
+From: KantaTamura <tkanta496@gmail.com>
+Date: Tue, 11 Nov 2025 09:04:14 +0000
+Subject: [PATCH 5/5] configs: enable watch dog timer
+
+Signed-off-by: KantaTamura <tkanta496@gmail.com>
+---
+ configs/xilinx_versal_dualboot_golden_defconfig | 3 +++
+ configs/xilinx_versal_dualboot_main_defconfig   | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/configs/xilinx_versal_dualboot_golden_defconfig b/configs/xilinx_versal_dualboot_golden_defconfig
+index 489b43375c1..d09a28fbc0a 100644
+--- a/configs/xilinx_versal_dualboot_golden_defconfig
++++ b/configs/xilinx_versal_dualboot_golden_defconfig
+@@ -165,3 +165,6 @@ CONFIG_DISTRO_BOOT_PARTITION_HELPERS=y
+ CONFIG_BOOT_SEARCH_LABEL="bootg"
+ CONFIG_BOOT_SCRIPT_NAME="boot.scr-golden"
+ CONFIG_CMD_MB=y
++CONFIG_WDT=y
++CONFIG_WDT_XILINX=y
++CONFIG_CMD_WDT=y
+diff --git a/configs/xilinx_versal_dualboot_main_defconfig b/configs/xilinx_versal_dualboot_main_defconfig
+index ec276d0e11e..913834d94a7 100644
+--- a/configs/xilinx_versal_dualboot_main_defconfig
++++ b/configs/xilinx_versal_dualboot_main_defconfig
+@@ -165,3 +165,6 @@ CONFIG_DISTRO_BOOT_PARTITION_HELPERS=y
+ CONFIG_BOOT_SEARCH_LABEL="bootm"
+ CONFIG_BOOT_SCRIPT_NAME="boot.scr-main"
+ CONFIG_CMD_MB=y
++CONFIG_WDT=y
++CONFIG_WDT_XILINX=y
++CONFIG_CMD_WDT=y
+-- 
+2.51.2
+

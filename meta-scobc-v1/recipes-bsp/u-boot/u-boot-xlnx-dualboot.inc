@@ -4,6 +4,7 @@ SRC_URI:append = " \
 	file://0002-config-added-config-for-dualboot.patch \
     file://0003-cmd-add-non-secure-mb-command-to-read-write-PMC_MULT.patch \
     file://0004-configs-enable-mb-command-in-dualboot-defconfigs.patch \
+    file://0005-configs-enable-watch-dog-timer.patch \
 "
 
 # default UBOOT_CONFIG setting

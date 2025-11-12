@@ -1,7 +1,7 @@
 From f40aa3f74e05614425b094e465ea61db75cbfac4 Mon Sep 17 00:00:00 2001
 From: KantaTamura <tkanta496@gmail.com>
 Date: Mon, 10 Nov 2025 05:32:02 +0000
-Subject: [PATCH 4/4] configs: enable mb command in dualboot defconfigs
+Subject: [PATCH 4/5] configs: enable mb command in dualboot defconfigs
 
 Add CONFIG_CMD_MB=y to both xilinx_versal_dualboot_golden_defconfig and
 xilinx_versal_dualboot_main_defconfig to include the non-secure 'mb'

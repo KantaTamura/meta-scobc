@@ -1,7 +1,7 @@
 From 0ab00a0666acf65f82dadca47812d28c3a3b9530 Mon Sep 17 00:00:00 2001
 From: KantaTamura <tkanta496@gmail.com>
 Date: Mon, 10 Nov 2025 05:24:11 +0000
-Subject: [PATCH 3/4] cmd: add non-secure 'mb' command to read/write
+Subject: [PATCH 3/5] cmd: add non-secure 'mb' command to read/write
  PMC_MULTI_BOOT
 
 - 'mb' reads PMC_GLOBAL.PMC_MULTI_BOOT
