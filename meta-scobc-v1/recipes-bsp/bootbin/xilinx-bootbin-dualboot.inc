@@ -1,3 +1,8 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+SRC_URI:append = " \
+	file://config_fpd_wdt.cdo \
+"
+
 # Add two subpackages for dualboot images:
 # - ${PN}-main installs nothing (placeholder for the main image)
 # - ${PN}-golden installs boot.bin and boot0001.bin into /boot
@@ -23,8 +28,12 @@ ALLOW_EMPTY:${PN}-main = "1"
 # configuration (main / golden). The existing u-boot-xlnx partition
 # definition is reused, and only the ELF file path is switched between
 # the two variants.
-BIF_PARTITION_ATTR[main] = "${BIF_FSBL_ATTR} ${BIF_DEVICETREE_ATTR} ${BIF_ATF_ATTR} u-boot-main"
-BIF_PARTITION_ATTR[golden] =  "${BIF_FSBL_ATTR} ${BIF_DEVICETREE_ATTR} ${BIF_ATF_ATTR} u-boot-golden"
+BIF_PARTITION_ATTR[main] = "${BIF_FSBL_ATTR} fpd-cdo ${BIF_DEVICETREE_ATTR} ${BIF_ATF_ATTR} u-boot-main"
+BIF_PARTITION_ATTR[golden] =  "${BIF_FSBL_ATTR} fpd-cdo ${BIF_DEVICETREE_ATTR} ${BIF_ATF_ATTR} u-boot-golden"
+
+BIF_PARTITION_ATTR[fpd-cdo]  = "type=cdo"
+BIF_PARTITION_ID[fpd-cdo]    = "0x1c000000"
+BIF_PARTITION_IMAGE[fpd-cdo] = "${WORKDIR}/config_fpd_wdt.cdo"
 
 BIF_PARTITION_ATTR[u-boot-main]  = "${@d.getVarFlag('BIF_PARTITION_ATTR','u-boot-xlnx')}"
 BIF_PARTITION_ID[u-boot-main]    = "${@d.getVarFlag('BIF_PARTITION_ID','u-boot-xlnx')}"
