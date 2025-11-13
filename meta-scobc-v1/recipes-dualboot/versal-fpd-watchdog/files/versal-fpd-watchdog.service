@@ -1,0 +1,14 @@
+[Unit]
+Description=Kick Versal FPD SWDT (/dev/versal-fpd-watchdog)
+ConditionPathExists=/dev/versal-fpd-watchdog
+BindsTo=dev-versal\x2dfpd\x2dwatchdog.device
+After=dev-versal\x2dfpd\x2dwatchdog.device
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/versal-fpd-watchdog-daemon
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=dev-versal\x2dfpd\x2dwatchdog.device

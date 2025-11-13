@@ -1,1 +1,1 @@
-SUBSYSTEM=="watchdog", KERNELS=="fd4d0000.watchdog", SYMLINK+="versal-fpd-watchdog"
+SUBSYSTEM=="watchdog", TAG+="systemd", KERNELS=="fd4d0000.watchdog", SYMLINK+="versal-fpd-watchdog", ENV{SYSTEMD_ALIAS}+="/dev/versal-fpd-watchdog", ENV{SYSTEMD_WANTS}="versal-fpd-watchdog.service"
