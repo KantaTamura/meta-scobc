@@ -1,0 +1,7 @@
+header:
+  version: 19
+
+machine: versal-scobc-v1-sdt-full
+
+target:
+  - sc-image-minimal
