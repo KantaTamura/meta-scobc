@@ -1,0 +1,8 @@
+/dts-v1/;
+/plugin/;
+&fpga {
+	firmware-name = "sc_obc_v1_versal.pdi";
+};
+
+&amba {
+};
