@@ -1,0 +1,9 @@
+/ {
+	amba_pl: amba_pl {
+		ranges;
+		compatible = "simple-bus";
+		#address-cells = <2>;
+		#size-cells = <2>;
+		firmware-name = "sc_obc_v1_versal.pdi";
+	};
+};

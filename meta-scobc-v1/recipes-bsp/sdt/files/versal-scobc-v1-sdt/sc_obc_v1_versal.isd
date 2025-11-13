@@ -1,0 +1,13 @@
+{
+  "spec_file_version": 4,
+  "info": {
+    "device_name": "ve2302",
+    "format": "deep"
+  },
+  "flags": {},
+  "modules": {},
+  "design": {
+    "name": "sc_obc_v1_versal_1",
+    "base_protection": {}
+  }
+}
