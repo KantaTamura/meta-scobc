@@ -1,0 +1,81 @@
+From 4946e07c5ac22a62e5f3b616a5e887e93a0f5299 Mon Sep 17 00:00:00 2001
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Date: Wed, 5 Nov 2025 16:48:00 +0900
+Subject: [PATCH] mtd: spi-nor: spansion: SMPT fixups for S25FS-S
+
+S25FS-S family supports SMPT that helps to detect sector layout settings
+in configuration registers, but some of parameters in the table are
+wrong or undetermined so the fixups below are required.
+
+Read Any Register op is used to read configuration registers that
+related to sector map. The op requires 8 cycles latency by default.
+Implement smpt_read_dummy() to set correct dummy cycles.
+
+Map ID is structured by combination of CR3NV[3], CR1NV[2], and CR3NV[1].
+However, in S25FS512S, CR3NV[1] is RFU and always 0, while map IDs
+defined in the table assume it is always 1. Implement smpt_map_id() to
+fix map ID for S25FS512S. Other densities in S25FS-S family (256Mb and
+128Mb) don't need this fix as CR3NV[1] in those chips is configurable
+and map IDs are correctly defined in SMPT.
+
+Co-developed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Tested-by: Marek Vasut <marek.vasut+renesas@mailbox.org> # S25FS512S
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+---
+ drivers/mtd/spi-nor/spansion.c | 38 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 69ba7fd8060c..956b8c94bc12 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -832,8 +832,46 @@ s25fs_s_nor_post_bfpt_fixups(struct spi_nor *nor,
+ 	return 0;
+ }
+ 
++static void s25fs_s_nor_smpt_read_dummy(const struct spi_nor *nor,
++					u8 *read_dummy)
++{
++	/*
++	 * The configuration detection dwords in S25FS-S SMPT has 65h as
++	 * command instruction and 'variable' as configuration detection command
++	 * latency. Set 8 dummy cycles as it is factory default for 65h (read
++	 * any register) op.
++	 */
++	*read_dummy = 8;
++}
++
++static void s25fs_s_nor_smpt_map_id_dummy(const struct spi_nor *nor, u8 *map_id)
++{
++	/*
++	 * The S25FS512S chip supports:
++	 *   - Hybrid sector option which has physical set of eight 4-KB sectors
++	 *     and one 224-KB sector at the top or bottom of address space with
++	 *     all remaining sectors of 256-KB
++	 *   - Uniform sector option which has uniform 256-KB sectors
++	 *
++	 * On the other hand, the datasheet rev.O Table 71 on page 153 JEDEC
++	 * Sector Map Parameter Dword-6 Config. Detect-3 does use CR3NV[1] to
++	 * discern 64-KB(CR3NV[1]=0) and 256-KB(CR3NV[1]=1) uniform sectors
++	 * device configuration. And in section 7.5.5.1 Configuration Register 3
++	 * Non-volatile (CR3NV) page 61, the CR3NV[1] is RFU Reserved for Future
++	 * Use and set to 0, which means 64-KB uniform. Since the device does
++	 * not support 64-KB uniform sectors in any configuration, parsing SMPT
++	 * table cannot find a valid sector map entry and fails. Fix this up by
++	 * setting SMPT by overwriting the CR3NV[1] value to 1, as the table
++	 * expects.
++	 */
++	if (nor->params->size == SZ_64M)
++		*map_id |= BIT(0);
++}
++
+ static const struct spi_nor_fixups s25fs_s_nor_fixups = {
+ 	.post_bfpt = s25fs_s_nor_post_bfpt_fixups,
++	.smpt_read_dummy = s25fs_s_nor_smpt_read_dummy,
++	.smpt_map_id = s25fs_s_nor_smpt_map_id_dummy,
+ };
+ 
+ static const struct flash_info spansion_nor_parts[] = {

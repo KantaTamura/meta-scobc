@@ -1,0 +1,28 @@
+From 60bc1ab99cbeb8d988f8eab51805e9341681f707 Mon Sep 17 00:00:00 2001
+From: Yasushi SHOJI <yashi@spacecubics.com>
+Date: Fri, 14 Nov 2025 12:45:29 +0900
+Subject: [PATCH] mtd: spi-nor: spansion: Fix warning
+
+After applying S25FS-S fixes[1], this change is need for 6.12 LTS.
+
+[1]: https://lists.infradead.org/pipermail/linux-mtd/2025-November/110844.html
+
+Signed-off-by: Yasushi SHOJI <yashi@spacecubics.com>
+---
+ drivers/mtd/spi-nor/spansion.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 956b8c94bc12..1569d9c63967 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -864,7 +864,8 @@ static void s25fs_s_nor_smpt_map_id_dummy(const struct spi_nor *nor, u8 *map_id)
+ 	 * setting SMPT by overwriting the CR3NV[1] value to 1, as the table
+ 	 * expects.
+ 	 */
+-	if (nor->params->size == SZ_64M)
++	struct spi_nor_flash_parameter *params = spi_nor_get_params(nor, 0);
++	if (params->size == SZ_64M)
+ 		*map_id |= BIT(0);
+ }
+ 
