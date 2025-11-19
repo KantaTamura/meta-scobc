@@ -1,0 +1,31 @@
+From 771cf72973f6544cbdd0a79b92ca557d85e78abb Mon Sep 17 00:00:00 2001
+From: Takumi Ando <takumi@spacecubics.com>
+Date: Thu, 4 Dec 2025 19:32:00 +0900
+Subject: [PATCH] net: phy: dp83867: Write only SW_RESTART when restarting PHY
+
+Reading DP83867_CTRL before setting the SW_RESTART bit is unnecessary.
+Just write the restart bit directly to avoid redundant MDIO accesses.
+
+Signed-off-by: Takumi Ando <takumi@spacecubics.com>
+---
+ drivers/net/phy/dp83867.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index 772cde1c520..76342ac75a5 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -262,9 +262,8 @@ static int dp83867_config(struct phy_device *phydev)
+ 		return ret;
+ 
+ 	/* Restart the PHY.  */
+-	val = phy_read(phydev, MDIO_DEVAD_NONE, DP83867_CTRL);
+ 	phy_write(phydev, MDIO_DEVAD_NONE, DP83867_CTRL,
+-		  val | DP83867_SW_RESTART);
++		  DP83867_SW_RESTART);
+ 
+ 	/* Mode 1 or 2 workaround */
+ 	if (dp83867->rxctrl_strap_quirk) {
+-- 
+2.51.2
+
