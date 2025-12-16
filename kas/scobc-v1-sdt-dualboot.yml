@@ -1,0 +1,9 @@
+header:
+  version: 19
+  includes:
+    - kas/xilinx/v2025-1.yml
+    - kas/sc/scobc-v1.yml
+    - kas/sc/scobc-dualboot.yml
+    - kas/machine/versal-scobc-v1-sdt-full.yml
+    - kas/targets/sc-image-dualboot.yml
+    - kas/conf/site.yml

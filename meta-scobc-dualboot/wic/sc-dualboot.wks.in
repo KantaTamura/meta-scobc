@@ -1,0 +1,25 @@
+# Description: Dual-boot WIC layout for SC boards.
+# This layout is intended to be used **only** from the `sc-image-dualboot.bb`
+# recipe, which constructs a unified SD card image combining two complete
+# Linux root filesystems:
+#
+#   - **golden**: a minimal, stable fallback image (read-only / recovery)
+#   - **main**: a development / active image for normal operation
+#
+# Each rootfs contains its own /boot directory.  This wks assigns a separate
+# VFAT boot partition and EXT4 root partition for both sides, allowing each
+# system to boot independently.
+#
+# Partition layout:
+#   ┌──────────────────────────────────────────────────────────┐
+#   │  boot_golden  (VFAT, /boot from golden rootfs)           │
+#   │  root_golden  (EXT4, golden full rootfs)                 │
+#   │  boot_main    (VFAT, /boot from main rootfs)             │
+#   │  root_main    (EXT4, main full rootfs)                   │
+#   └──────────────────────────────────────────────────────────┘
+
+part boot_golden --use-label --label bootg --fstype=vfat --align 4 --fixed-size=512M --source rawcopy --sourceparams="file=${GOLDEN_BOOT_VFAT_PATH}"   --active
+part root_golden --use-label --label rootg --fstype=ext4 --align 4 --fixed-size=2G   --source rawcopy --sourceparams="file=${GOLDEN_ROOTFS_EXT4_PATH}"
+
+part boot_main   --use-label --label bootm --fstype=vfat --align 4 --fixed-size=512M --source rawcopy --sourceparams="file=${MAIN_BOOT_VFAT_PATH}"
+part root_main   --use-label --label rootm --fstype=ext4 --align 4                   --source rawcopy --sourceparams="file=${MAIN_ROOTFS_EXT4_PATH}"
