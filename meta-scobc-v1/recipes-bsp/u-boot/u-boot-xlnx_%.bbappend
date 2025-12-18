@@ -1,4 +1,5 @@
 require u-boot-elf-install-fix.inc
+require u-boot-extra-cfgs.inc
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI:append = " \
