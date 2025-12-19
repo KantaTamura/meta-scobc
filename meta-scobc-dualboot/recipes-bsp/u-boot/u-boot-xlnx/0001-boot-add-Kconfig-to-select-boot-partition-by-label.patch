@@ -1,0 +1,107 @@
+From 96f28a19c0ee55d7fe8dce1cf7f59e92bac44328 Mon Sep 17 00:00:00 2001
+From: KantaTamura <tkanta496@gmail.com>
+Date: Tue, 4 Nov 2025 06:34:09 +0000
+Subject: [PATCH] boot: add Kconfig to select boot partition by label
+
+If CONFIG_BOOT_PARTITION_LABEL is set, distro-boot now resolves the boot
+partition by label using `part number ${devtype} ${devnum}
+${bootpartlabel} partnum`
+before falling back to the legacy -bootable scan.
+
+Signed-off-by: KantaTamura <tkanta496@gmail.com>
+---
+ boot/Kconfig                    | 35 +++++++++++++++++++++++++++++++++
+ include/config_distro_bootcmd.h | 24 +++++++++++++++++++++-
+ 2 files changed, 58 insertions(+), 1 deletion(-)
+
+diff --git a/boot/Kconfig b/boot/Kconfig
+index af54a0660e3..53cf1b98ddf 100644
+--- a/boot/Kconfig
++++ b/boot/Kconfig
+@@ -969,6 +969,41 @@ config DISTRO_DEFAULTS
+ 	  Select this to enable various options and commands which are suitable
+ 	  for building u-boot for booting general purpose Linux distributions.
+ 
++menu "Distro boot helpers"
++
++config DISTRO_BOOT_PARTITION_HELPERS
++	bool "Enable partition resolution helpers for distro-boot"
++	depends on DISTRO_DEFAULTS
++	help
++	  Enable automatic detection of the boot partition during distro-boot.
++	  The system first tries to locate the partition by GPT label, and if
++	  that fails, it falls back to scanning for a boot script file on
++	  MBR/non-GPT layouts.
++
++if DISTRO_BOOT_PARTITION_HELPERS
++
++config BOOT_SEARCH_LABEL
++	string "Boot partition label to search first (GPT)"
++	depends on EFI_PARTITION
++	default "boot"
++	help
++	  GPT label name to identify the boot partition (e.g. "boot").
++	  If no partition with this label is found, the system falls back to
++	  scanning partitions by CONFIG_BOOT_SCRIPT_NAME.
++
++config BOOT_SCRIPT_NAME
++	string "Boot script filename for fallback (non-GPT)"
++	default "boot.scr"
++	help
++	  Fallback method for non-GPT/MBR layouts. The bootloader scans partitions
++	  sequentially and selects the first one that contains:
++	    /${CONFIG_BOOT_SCRIPT_NAME}
++	  This script is then used to continue the boot process.
++
++endif # DISTRO_BOOT_PARTITION_HELPERS
++
++endmenu
++
+ menu "Boot timing"
+ 
+ config BOOTSTAGE
+diff --git a/include/config_distro_bootcmd.h b/include/config_distro_bootcmd.h
+index 0a4e4b8ff85..2cc82640557 100644
+--- a/include/config_distro_bootcmd.h
++++ b/include/config_distro_bootcmd.h
+@@ -471,6 +471,28 @@
+ #define BOOTENV_SHARED_EXTENSION
+ #endif
+ 
++#ifdef CONFIG_DISTRO_BOOT_PARTITION_HELPERS
++#define SCAN_BOOT_PART \
++	"setenv bootpartnum; " \
++	"if part number ${devtype} ${devnum} " CONFIG_BOOT_SEARCH_LABEL " bootpartnum; then " \
++		"echo Found boot partition " CONFIG_BOOT_SEARCH_LABEL "; " \
++		"setenv devplist ${bootpartnum}; " \
++	"else " \
++		"echo No " CONFIG_BOOT_SEARCH_LABEL " partition. scanning all partitions...; " \
++		"part list ${devtype} ${devnum} partlist; " \
++		"for partnum in ${partlist}; do " \
++			"if test -e ${devtype} ${devnum}:${partnum} /" CONFIG_BOOT_SCRIPT_NAME "; then "\
++				"setenv devplist ${partnum}; " \
++				"echo Found boot script on partition ${partnum}; " \
++			"fi; " \
++		"done; " \
++	"fi; " \
++	"env exists devplist || part list ${devtype} ${devnum} devplist; "
++#else
++#define SCAN_BOOT_PART \
++		"part list ${devtype} ${devnum} -bootable devplist; "
++#endif
++
+ #define BOOTENV_DEV_NAME(devtypeu, devtypel, instance, ...) \
+ 	BOOTENV_DEV_NAME_##devtypeu(devtypeu, devtypel, instance, ## __VA_ARGS__)
+ #define BOOTENV_BOOT_TARGETS \
+@@ -538,7 +560,7 @@
+ 		"\0"                                                      \
+ 	\
+ 	"scan_dev_for_boot_part="                                         \
+-		"part list ${devtype} ${devnum} -bootable devplist; "     \
++		SCAN_BOOT_PART \
+ 		"env exists devplist || setenv devplist 1; "              \
+ 		"for distro_bootpart in ${devplist}; do "                 \
+ 			"if fstype ${devtype} "                           \
+-- 
+2.52.0
+
