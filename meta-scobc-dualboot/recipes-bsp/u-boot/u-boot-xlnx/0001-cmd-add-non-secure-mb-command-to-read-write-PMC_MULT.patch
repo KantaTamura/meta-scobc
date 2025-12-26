@@ -1,0 +1,161 @@
+From c8e30d19f1426f656abe8c6987ae9d8255ce3aa0 Mon Sep 17 00:00:00 2001
+From: KantaTamura <tkanta496@gmail.com>
+Date: Mon, 10 Nov 2025 05:24:11 +0000
+Subject: [PATCH] cmd: add non-secure 'mb' command to read/write PMC_MULTI_BOOT
+
+- 'mb' reads PMC_GLOBAL.PMC_MULTI_BOOT
+- 'mb sd <n>' writes 0xF0000000 | n (selects next BOOTxxxx.BIN)
+- 'mb sd-next' / 'mb sd-prev' increment/decrement SD file index
+- WARNING text and rationale added: this performs direct non-secure MMIO
+  that bypasses TF-A/PLM.
+
+Signed-off-by: KantaTamura <tkanta496@gmail.com>
+---
+ cmd/Kconfig  | 12 +++++++
+ cmd/Makefile |  1 +
+ cmd/mb.c     | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 111 insertions(+)
+ create mode 100644 cmd/mb.c
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 4b33468891e..5d72946e83c 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -914,6 +914,18 @@ config CMD_MEMORY
+ 	    base - print or set address offset
+ 	    loop - initialize loop on address range
+ 
++config CMD_MB
++	bool "mb - Forcefully modify PMC_MULTI_BOOT register (non-secure)"
++	default n
++	depends on ARCH_VERSAL || ARCH_VERSAL2
++	help
++	  Provides a low-level command to read and write the
++	  PMC_GLOBAL.PMC_MULTI_BOOT register directly via raw MMIO access.
++
++	  WARNING:
++	  - This command bypasses any secure firmware (e.g. TF-A/PLM) API.
++	  - It writes directly to hardware registers without permission checks.
++
+ config CMD_MEM_SEARCH
+ 	bool "ms - Memory search"
+ 	help
+diff --git a/cmd/Makefile b/cmd/Makefile
+index 533d0f6a1be..65f82e77173 100644
+--- a/cmd/Makefile
++++ b/cmd/Makefile
+@@ -109,6 +109,7 @@ obj-$(CONFIG_CMD_LOG) += log.o
+ obj-$(CONFIG_CMD_LSBLK) += lsblk.o
+ obj-$(CONFIG_CMD_MD5SUM) += md5sum.o
+ obj-$(CONFIG_CMD_MEMORY) += mem.o
++obj-${CONFIG_CMD_MB} += mb.o
+ obj-$(CONFIG_CMD_MEMINFO) += meminfo.o
+ obj-$(CONFIG_CMD_IO) += io.o
+ obj-$(CONFIG_CMD_MII) += mii.o
+diff --git a/cmd/mb.c b/cmd/mb.c
+new file mode 100644
+index 00000000000..626251a1111
+--- /dev/null
++++ b/cmd/mb.c
+@@ -0,0 +1,98 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * mb - Forcefully modify PMC_MULTI_BOOT register (non-secure)
++ *
++ * WARNING:
++ *  - This command performs direct, non-secure MMIO writes to the
++ *    PMC_MULTI_BOOT register. It bypasses secure firmware (TF-A/PLM)
++ *    and any access-control policies.
++ *
++ * NOTE:
++ *  - The PLM contains an XilLoader command (UpdateMultiBoot) capable of
++ *    updating multi-boot info when executed inside PLM. That command
++ *    is not generally reachable from outside the PLM via the CDO path.
++ *  - The "secure" PM IOCTL API (xilinx_pm_request / PM_IOCTL) provides
++ *    a sanctioned access path for some PMC registers, but REG_PMC_GLOBAL
++ *    (PMC_GLOBAL node) is typically exposed read-only via IOCTL on
++ *    many platform configurations. In that case the only way that
++ *    succeeds in your environment is direct MMIO (non-secure).
++ */
++
++#include <command.h>
++#include <mapmem.h>
++#include <asm/io.h>
++#include <linux/io.h>
++
++#define PMC_GLOBAL_BASE					(0xF1110000L)
++#define PMC_MULTI_BOOT_MODE_REG_OFFSET	(0x0004L)
++#define PMC_MULTI_BOOT_ADDR				(PMC_GLOBAL_BASE + PMC_MULTI_BOOT_MODE_REG_OFFSET)
++
++// ref. embeddedsw(plm-fw) XLoader_UpdateMultiboot()
++#define XLOADER_SD_FILE_SYSTEM_VAL		(0xF0000000U)
++#define XLOADER_SD_MAX_BOOT_FILES_LIMIT	(8192U)
++#define XLOADER_MULTIBOOT_OFFSET_MASK	(0x001FFFFFU)
++
++static inline void *mb_map(void)
++{
++	return map_sysmem(PMC_MULTI_BOOT_ADDR, sizeof(u32));
++}
++
++static int mb_read(void)
++{
++	void *p = mb_map();
++	u32 val = readl(p);
++	unmap_sysmem(p);
++	printf("PMC_MULTI_BOOT = 0x%08X\n", val);
++	return val;
++}
++
++static int mb_write(u32 val)
++{
++	void *p = mb_map();
++	writel(val, p);
++	unmap_sysmem(p);
++	printf("PMC_MULTI_BOOT set to 0x%08X\n", val);
++	return 0;
++}
++
++static int do_mb(struct cmd_tbl *cmdtp, int flag, int argc, char *const argv[])
++{
++	if (argc == 1) {
++		return mb_read() ? CMD_RET_FAILURE : CMD_RET_SUCCESS;
++	}
++
++	if ((argc == 3) && !strcmp(argv[1], "sd")) {
++		ulong file = simple_strtoul(argv[2], NULL, 0);
++		if (file >= XLOADER_SD_MAX_BOOT_FILES_LIMIT) {
++			printf("Error: file number %lu exceeds max limit %u\n",
++			       file, XLOADER_SD_MAX_BOOT_FILES_LIMIT - 1);
++			return CMD_RET_FAILURE;
++		}
++		u32 val = XLOADER_SD_FILE_SYSTEM_VAL | (u32)file;
++		return mb_write(val) ? CMD_RET_FAILURE : CMD_RET_SUCCESS;
++	}
++
++	if ((argc == 2) && !strcmp(argv[1], "sd-next")) {
++		u32 cur = mb_read();
++		u32 file = (cur & XLOADER_MULTIBOOT_OFFSET_MASK) + 1;
++		if (file >= XLOADER_SD_MAX_BOOT_FILES_LIMIT) {
++			printf("Already at last BOOT file (%lu); cannot increment further.\n", file - 1);
++			return CMD_RET_FAILURE;
++		}
++		u32 val = XLOADER_SD_FILE_SYSTEM_VAL | (file & XLOADER_MULTIBOOT_OFFSET_MASK);
++		return mb_write(val) ? CMD_RET_FAILURE : CMD_RET_SUCCESS;
++	}
++
++	return CMD_RET_USAGE;
++}
++
++U_BOOT_CMD(
++	mb, 3, 0, do_mb,
++	"Read/write PMC_GLOBAL.PMC_MULTI_BOOT (Versal) - NON-SECURE",
++	"mb\n"
++	"    - read current PMC_MULTI_BOOT value\n"
++	"mb sd <file-num>\n"
++	"    - set next BOOTxxxx.BIN by writing 0xF0000000 | <file-num>\n"
++	"mb sd-next\n"
++	"    - increment current SD file number by +1 (0xF0000000 | (N+1))\n\n"
++);
+-- 
+2.52.0
+

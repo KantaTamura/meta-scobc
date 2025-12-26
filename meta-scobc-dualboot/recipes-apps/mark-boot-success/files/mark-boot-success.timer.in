@@ -1,0 +1,10 @@
+[Unit]
+Description=Run `multiboot-tool sd-prev` 1min after Linux boot
+
+[Timer]
+OnBootSec=@ONBOOT_DELAY@
+Persistent=true
+Unit=mark-boot-success.service
+
+[Install]
+WantedBy=timers.target

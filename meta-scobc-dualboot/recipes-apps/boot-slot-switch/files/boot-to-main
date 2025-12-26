@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+if [ "$(id -u)" != "0" ]; then
+    echo "ERROR: must be run as root" >&2
+    exit 1
+fi
+
+if ! command -v /usr/sbin/multiboot-tool >/dev/null 2>&1; then
+    echo "ERROR: /usr/sbin/multiboot-tool not found" >&2
+    exit 1
+fi
+
+systemctl stop mark-boot-success.timer 2>/dev/null || true
+/usr/sbin/multiboot-tool sd 0
+
+# Reboot. Pass through any reboot arguments if given (e.g. --force).
+if [ "$#" -gt 0 ]; then
+    reboot "$@"
+else
+    reboot
+fi

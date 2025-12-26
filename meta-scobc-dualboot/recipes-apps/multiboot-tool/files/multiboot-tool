@@ -1,0 +1,128 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+
+set -eu
+
+MULTI_BOOT_ADDR="0xF1110004"
+DEVMEM="${DEVMEM:-$(command -v devmem || true)}"
+
+# ref. embeddedsw(plm-fw) XLoader_UpdateMultiboot()
+XLOADER_SD_FILE_SYSTEM_VAL=$((0xF0000000))
+XLOADER_MULTIBOOT_OFFSET_MASK=$((0x001FFFFF))
+XLOADER_SD_MAX_BOOT_FILES_LIMIT=$((8192))
+
+die() { echo "Error: $*" >&2; exit 1; }
+
+usage() {
+	cat >&2 <<'EOF'
+Usage:
+  multiboot-tool
+      - read current PMC_MULTI_BOOT value
+  multiboot-tool sd <file-num>
+      - set next BOOTxxxx.BIN by writing 0xF0000000 | <file-num>
+  multiboot-tool sd-next
+      - increment current SD file number by +1 (0xF0000000 | (N+1))
+  multiboot-tool sd-prev
+      - decrement current SD file number by -1 (0xF0000000 | (N-1))
+EOF
+	exit 2
+}
+
+need_devmem() {
+	[ -n "$DEVMEM" ] || die "devmem not found in PATH (or set DEVMEM=/path/to/devmem)"
+}
+
+# Read 32-bit register, return u32 in decimal on stdout
+read_reg_u32() {
+	need_devmem
+	raw="$($DEVMEM "$MULTI_BOOT_ADDR" 2>&1 || true)"
+	hex="$(printf '%s\n' "$raw" | grep -oE '0x[0-9a-fA-F]+' | tail -n1 || true)"
+	[ -n "$hex" ] || die "cannot parse devmem output: $raw"
+	# Convert to u32 decimal (shell arithmetic is signed-ish; mask to 32b)
+	printf '%u\n' $(( $(printf '%d' "$hex") & 0xFFFFFFFF ))
+}
+
+# Write 32-bit register
+write_reg_u32() {
+	need_devmem
+	val_u32="$1"
+	hex="0x$(printf '%08X' "$((val_u32 & 0xFFFFFFFF))")"
+	$DEVMEM "$MULTI_BOOT_ADDR" 32 "$hex" >/dev/null 2>&1 || die "devmem write failed"
+}
+
+print_read() {
+	cur="$(read_reg_u32)"
+	printf 'PMC_MULTI_BOOT = 0x%08X\n' "$cur"
+}
+
+sd_set() {
+	file="$1"
+
+	# allow 0x.. too
+	case "$file" in
+		''|*[!0-9a-fA-FxX]*) die "invalid file-num: $file" ;;
+	esac
+
+	file_dec=$((file)) # parse base-0
+	[ "$file_dec" -lt "$XLOADER_SD_MAX_BOOT_FILES_LIMIT" ] \
+		|| die "file number $file_dec exceeds max limit $((XLOADER_SD_MAX_BOOT_FILES_LIMIT - 1))"
+
+	val=$(( XLOADER_SD_FILE_SYSTEM_VAL | (file_dec & XLOADER_MULTIBOOT_OFFSET_MASK) ))
+	write_reg_u32 "$val"
+	printf 'PMC_MULTI_BOOT set to 0x%08X\n' "$val"
+}
+
+sd_next() {
+	cur="$(read_reg_u32)"
+	file=$(( (cur & XLOADER_MULTIBOOT_OFFSET_MASK) + 1 ))
+
+	[ "$file" -lt "$XLOADER_SD_MAX_BOOT_FILES_LIMIT" ] \
+		|| die "Already at last BOOT file ($((file - 1))); cannot increment further."
+
+	val=$(( XLOADER_SD_FILE_SYSTEM_VAL | (file & XLOADER_MULTIBOOT_OFFSET_MASK) ))
+	write_reg_u32 "$val"
+	printf 'PMC_MULTI_BOOT set to 0x%08X\n' "$val"
+}
+
+sd_prev() {
+	cur="$(read_reg_u32)"
+	file=$(( cur & XLOADER_MULTIBOOT_OFFSET_MASK ))
+
+	[ "$file" -gt 0 ] || die "Already at first BOOT file (0); cannot decrement further."
+
+	file=$((file - 1))
+	val=$(( XLOADER_SD_FILE_SYSTEM_VAL | (file & XLOADER_MULTIBOOT_OFFSET_MASK) ))
+	write_reg_u32 "$val"
+	printf 'PMC_MULTI_BOOT set to 0x%08X\n' "$val"
+}
+
+cmd="${1:-}"
+
+case "$cmd" in
+	"")
+		print_read
+		;;
+
+	"sd")
+		[ $# -eq 2 ] || usage
+		sd_set "$2"
+		;;
+
+	"sd-next")
+		[ $# -eq 1 ] || usage
+		sd_next
+		;;
+
+	"sd-prev")
+		[ $# -eq 1 ] || usage
+		sd_prev
+		;;
+
+	-h|--help|help)
+		usage
+		;;
+
+	*)
+		usage
+		;;
+esac
