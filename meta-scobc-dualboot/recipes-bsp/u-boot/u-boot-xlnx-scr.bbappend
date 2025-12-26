@@ -8,11 +8,14 @@ SRC_URI:append = " \
 KERNEL_ROOT_SD:remove = "root=/dev/\${bootdev}${PARTNUM}"
 KERNEL_ROOT_SD:prepend = "root=PARTUUID=\${rootuuid} "
 
+KERNEL_ROOT_SD:append = " rauc.slot=\${raucslot}"
+
 do_compile:append() {
     emit_variant_cmd() {
         variant="$1"
         rootfs_label="$2"
         bootscript_name="$3"
+        rauc_slot="$4"
 
         # Most @@VAR@@ placeholders are expanded from BitBake variables.
         # Only @@ROOT_PARTITION_LABEL@@ uses the shell variable $rootfs_label,
@@ -58,16 +61,17 @@ do_compile:append() {
             -e 's:@@KERNEL_COMMAND_APPEND@@:${KERNEL_COMMAND_APPEND}:' \
             -e "s/@@ROOT_PARTITION_LABEL@@/${rootfs_label}/" \
             -e "s/@@BOOT_SCRIPT_NAME@@/${bootscript_name}/" \
+            -e "s/@@RAUC_SLOT@@/${rauc_slot}/" \
             ${SCRIPT_SED_ADDENDUM} \
             "${WORKDIR}/boot.cmd.dualboot" > "${WORKDIR}/boot.cmd-${variant}"
     }
 
     # create boot script for main image
-    emit_variant_cmd "main" "rootm" "boot.scr-main"
+    emit_variant_cmd "main" "rootm" "boot.scr-main" "main"
     mkimage -A arm -T script -C none -n "Dualboot boot script (main)" -d "${WORKDIR}/boot.cmd-main" boot.scr-main
 
     # create boot script for golden image
-    emit_variant_cmd "golden" "rootg" "boot.scr-golden"
+    emit_variant_cmd "golden" "rootg" "boot.scr-golden" "golden"
     mkimage -A arm -T script -C none -n "Dualboot boot script (golden)"  -d "${WORKDIR}/boot.cmd-golden"  boot.scr-golden
 }
 

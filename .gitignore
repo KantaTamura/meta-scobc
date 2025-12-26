@@ -2,6 +2,9 @@
 sources
 build
 
+## RAUC .gitignore
+openssl-ca
+
 ## Python .gitignore template
 # Byte-compiled / optimized / DLL files
 __pycache__/
