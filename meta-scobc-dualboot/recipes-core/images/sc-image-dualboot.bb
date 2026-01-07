@@ -16,19 +16,26 @@ WKS_FILES = "sc-dualboot.wks.in"
 MAIN_IMAGE_NAME   = "sc-image-dev"
 GOLDEN_IMAGE_NAME = "sc-image-minimal"
 
-MAIN_ROOTFS_EXT4_PATH   = "${DEPLOY_DIR_IMAGE}/${MAIN_IMAGE_NAME}-${MACHINE}.ext4"
-MAIN_BOOT_VFAT_PATH     = "${DEPLOY_DIR_IMAGE}/${MAIN_IMAGE_NAME}-${MACHINE}.vfat.boot"
-GOLDEN_ROOTFS_EXT4_PATH = "${DEPLOY_DIR_IMAGE}/${GOLDEN_IMAGE_NAME}-${MACHINE}.ext4"
-GOLDEN_BOOT_VFAT_PATH   = "${DEPLOY_DIR_IMAGE}/${GOLDEN_IMAGE_NAME}-${MACHINE}.vfat.boot"
-WICVARS:append = " MAIN_ROOTFS_EXT4_PATH MAIN_BOOT_VFAT_PATH GOLDEN_ROOTFS_EXT4_PATH GOLDEN_BOOT_VFAT_PATH"
+DUALBOOT_ROOTFS = "${WORKDIR}/dualboot_rootfs"
+MAIN_ROOTFS_DIR = "${DUALBOOT_ROOTFS}/main"
+GOLDEN_ROOTFS_DIR = "${DUALBOOT_ROOTFS}/golden"
+
+WICVARS:append = " MAIN_ROOTFS_DIR GOLDEN_ROOTFS_DIR"
 
 do_prepare_rootfs_dirs[depends] += " \
     ${MAIN_IMAGE_NAME}:do_image_complete \
     ${GOLDEN_IMAGE_NAME}:do_image_complete \
 "
 
-# Create empty IMAGE_ROOTFS to satisfy do_image_wic dependencies
-do_prepare_rootfs_dirs() {
+fakeroot do_prepare_rootfs_dirs() {
+    set -e
+    rm -rf ${DUALBOOT_ROOTFS}
+    mkdir -p ${MAIN_ROOTFS_DIR} ${GOLDEN_ROOTFS_DIR}
+
+    tar --numeric-owner --same-owner -C ${MAIN_ROOTFS_DIR}   -xzf ${DEPLOY_DIR_IMAGE}/${MAIN_IMAGE_NAME}-${MACHINE}.tar.gz
+    tar --numeric-owner --same-owner -C ${GOLDEN_ROOTFS_DIR} -xzf ${DEPLOY_DIR_IMAGE}/${GOLDEN_IMAGE_NAME}-${MACHINE}.tar.gz
+
+    # Create empty IMAGE_ROOTFS to satisfy do_image_wic dependencies
     mkdir -p ${IMAGE_ROOTFS}
 }
 addtask prepare_rootfs_dirs before do_rootfs_wicenv

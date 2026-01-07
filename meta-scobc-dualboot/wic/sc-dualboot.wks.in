@@ -18,8 +18,8 @@
 #   │  root_main    (EXT4, main full rootfs)                   │
 #   └──────────────────────────────────────────────────────────┘
 
-part boot_golden --use-label --label bootg --fstype=vfat --align 4 --fixed-size=512M --source rawcopy --sourceparams="file=${GOLDEN_BOOT_VFAT_PATH}"   --active
-part root_golden --use-label --label rootg --fstype=ext4 --align 4 --fixed-size=2G   --source rawcopy --sourceparams="file=${GOLDEN_ROOTFS_EXT4_PATH}"
+part boot_golden --use-label --label bootg --fstype=vfat --align 4 --fixed-size=512M --source rootfs --rootfs-dir=${GOLDEN_ROOTFS_DIR}/boot --active
+part root_golden --use-label --label rootg --fstype=ext4 --align 4 --fixed-size=2G   --source rootfs --rootfs-dir=${GOLDEN_ROOTFS_DIR}
 
-part boot_main   --use-label --label bootm --fstype=vfat --align 4 --fixed-size=512M --source rawcopy --sourceparams="file=${MAIN_BOOT_VFAT_PATH}"
-part root_main   --use-label --label rootm --fstype=ext4 --align 4                   --source rawcopy --sourceparams="file=${MAIN_ROOTFS_EXT4_PATH}"
+part boot_main   --use-label --label bootm --fstype=vfat --align 4 --fixed-size=512M --source rootfs --rootfs-dir=${MAIN_ROOTFS_DIR}/boot
+part root_main   --use-label --label rootm --fstype=ext4 --align 4 --fixed-size=2G   --source rootfs --rootfs-dir=${MAIN_ROOTFS_DIR}
