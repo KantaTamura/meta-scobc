@@ -939,7 +939,7 @@ mask_write 0xf1060014 0x3fe 0x6
 marker 0 "Configures MIO Pin 6 peripheral interface mapping"
 mask_write 0xf1060018 0x3fe 0x100
 marker 0 "Configures MIO Pin 7 peripheral interface mapping"
-mask_write 0xf106001c 0x3fe 0x100
+mask_write 0xf106001c 0x3fe 0x6
 marker 0 "Configures MIO Pin 8 peripheral interface mapping"
 mask_write 0xf1060020 0x3fe 0x100
 marker 0 "Configures MIO Pin 9 peripheral interface mapping"
@@ -999,7 +999,7 @@ mask_write 0xf106008c 0x3fe 0x2
 marker 0 "Configures MIO Pin 36 peripheral interface mapping"
 mask_write 0xf1060090 0x3fe 0x2
 marker 0 "Configures MIO Pin 37 peripheral interface mapping"
-mask_write 0xf1060094 0x3fe 0x300
+mask_write 0xf1060094 0x3fe 0x60
 marker 0 "Configures MIO Pin 38 peripheral interface mapping"
 mask_write 0xf1060098 0x3fe 0x2
 marker 0 "Configures MIO Pin 39 peripheral interface mapping"
@@ -1029,33 +1029,33 @@ mask_write 0xf10600c8 0x3fe 0x60
 marker 0 "Configures MIO Pin 51 peripheral interface mapping"
 mask_write 0xf10600cc 0x3fe 0x2
 marker 0 "bnk0_en_wk_pu"
-mask_write 0xf1060114 0x3ffffff 0x3ffffff
+mask_write 0xf1060114 0x3ffffff 0
 marker 0 "bnk1_en_wk_pu"
-mask_write 0xf1060314 0x3fff7ff 0x3fff7ff
+mask_write 0xf1060314 0x3ffffff 0
 marker 0 "bnk0_en_wk_pd"
-mask_write 0xf1060110 0x3ffffff 0
+mask_write 0xf1060110 0x3ffffff 0x1000
 marker 0 "bnk1_en_wk_pd"
-mask_write 0xf1060310 0x3fff7ff 0
+mask_write 0xf1060310 0x3ffffff 0x800
 marker 0 "bnk0_sel_slew"
-mask_write 0xf1060120 0x3ffffff 0
+mask_write 0xf1060120 0x3ffffff 0x17bffff
 marker 0 "bnk1_sel_slew"
-mask_write 0xf1060320 0x3fff7ff 0
+mask_write 0xf1060320 0x3ffffff 0x3ffdfff
 marker 0 "bnk0_sel_drv0"
-mask_write 0xf1060118 0xffffffff 0xaaaaafff
+mask_write 0xf1060118 0xffffffff 0xffffffff
 marker 0 "bnk0_sel_drv1"
-mask_write 0xf106011c 0xfffff 0xaaaaa
+mask_write 0xf106011c 0xfffff 0xbbfef
 marker 0 "bnk1_sel_drv0"
-mask_write 0xf1060318 0xff3fffff 0xaa2aaaaa
+mask_write 0xf1060318 0xffffffff 0xfbffffff
 marker 0 "bnk1_sel_drv1"
-mask_write 0xf106031c 0xfffff 0xaaaaa
+mask_write 0xf106031c 0xfffff 0xfffff
 marker 0 "bnk0_en_rx_schmitt_hyst"
 mask_write 0xf106010c 0x3ffffff 0x10021bf
 marker 0 "bnk1_en_rx_schmitt_hyst"
-mask_write 0xf106030c 0x3fff7ff 0x2800000
+mask_write 0xf106030c 0x3ffffff 0x2800000
 marker 0 "MIO pin Tri-state Enables, 31:0"
 mask_write 0xf1060200 0x3ffffff 0x2840000
 marker 0 "MIO pin Tri-state Enables, 63:32"
-mask_write 0xf1060204 0x3fff7ff 0x1002004
+mask_write 0xf1060204 0x3ffffff 0x2004
 marker 0 "LOCKING SLCR"
 marker 0 "PMC SLCR Write protection register for IO Muxes"
 mask_write 0xf1060828 0x1 0x1
@@ -1128,6 +1128,10 @@ marker 0 "This register controls the sdio1_ref clock"
 mask_write 0xf1260128 0x103ff07 0x1000600
 marker 0 "This register controls the sd_dll_ref clock"
 mask_write 0xf1260160 0x203ff07 0x2000100
+marker 0 "This register controls the pmc_pl0_ref clock"
+mask_write 0xf12605c0 0x103ff07 0x1000c00
+marker 0 "This register controls the pmc_pl1_ref clock"
+mask_write 0xf12605c4 0x103ff07 0x1000600
 marker 0 "This register controls the efuse_ref clock"
 mask_write 0xf1260134 0x4 0
 marker 0 "This register controls the usb_suspend clock; This clock is not a PLL based clock. The input to this divider is IROCLK divide by 4."
@@ -1721,13 +1725,13 @@ marker 0 "Direction mode (GPIO Bank0, MIO)"
 mask_write 0xf1020204 0x3ffffff 0x1000
 marker 0 "DIR MODE BANK 1"
 marker 0 "Direction mode (GPIO Bank1, MIO)"
-mask_write 0xf1020244 0x3ffffff 0
+mask_write 0xf1020244 0x3ffffff 0x1000800
 marker 0 "OUTPUT ENABLE BANK 0"
 marker 0 "Output enable (GPIO Bank0, MIO)"
 mask_write 0xf1020208 0x3ffffff 0x1000
 marker 0 "OUTPUT ENABLE BANK 1"
 marker 0 "Output enable (GPIO Bank1, MIO)"
-mask_write 0xf1020248 0x3ffffff 0
+mask_write 0xf1020248 0x3ffffff 0x1000800
 marker 0 "MASK_DATA_0_LSW LOW BANK [15:0]"
 marker 0 "Maskable Output Data (GPIO Bank0, MIO, Lower 16bits)"
 mask_write 0xf1020000 0xffffffff 0xffff0000
@@ -1739,7 +1743,7 @@ marker 0 "Maskable Output Data (GPIO Bank1, MIO, Lower 16bits)"
 mask_write 0xf1020008 0xffffffff 0xffff0000
 marker 0 "MASK_DATA_1_MSW HIGH BANK [51:42]"
 marker 0 "Maskable Output Data (GPIO Bank1, MIO, Upper 10 bits)"
-mask_write 0xf102000c 0x3ff03ff 0x3ff0000
+mask_write 0xf102000c 0x3ff03ff 0x2ff0000
 marker 0 "CLOCK MONITOR SETTINGS"
 marker 0 "Over-Temp check with a delay of 0 ms"
 ot_check 0
