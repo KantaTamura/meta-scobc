@@ -1,5 +1,3 @@
-/dts-v1/;
-/plugin/;
 &fpga {
 	firmware-name = "sc_obc_v1_versal.pdi";
 };
@@ -40,5 +38,67 @@
 		reg = <0x0 0x80000000 0x0 0x1000>;
 		clocks = <&versal_clk 65>, <&versal_clk 65>, <&versal_clk 66>;
 		xlnx,name = "cam0_mipi_engine_2lane";
+	};
+};
+
+
+&amba {
+	dummy_camera_clk: dummy_camera_clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <74250000>;
+		clock-output-names = "dummy_camera_clk";
+	};
+
+	dummy_reg: dummy-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "dummy";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+	};
+};
+
+&cam0_mipi_engine_2lane {
+	compatible = "sc,rover-mipi-csi";
+	interrupts = < 0 93 4 >;
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			mipi_csi0_ep: endpoint {
+				remote-endpoint = <&cam0_imx296_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
+
+&cam0_iic {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imx296_cam0: camera-sensor@1a {
+		compatible = "sony,imx296";
+		reg = <0x1a>;
+
+		clocks = <&dummy_camera_clk>;
+		clock-names = "inck";
+
+		avdd-supply = <&dummy_reg>;
+		dvdd-supply = <&dummy_reg>;
+		ovdd-supply = <&dummy_reg>;
+		status = "okay";
+
+		port {
+			cam0_imx296_ep: endpoint {
+				remote-endpoint = <&mipi_csi0_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
 	};
 };

@@ -2595,17 +2595,18 @@
 		//* hw design is missing feedback clock that's why spi-max-frequency is 40MHz */;
 		xlnx,qspi-fbclk = <0>;
 		xlnx,baud-rate-div = <8>;
-		num-cs = <1>;
+		num-cs = <2>;
 		xlnx,qspi-clk-freq-hz = <300000000>;
 		xlnx,bus-width = <2>;
 		xlnx,ip-name = "psv_pmc_qspi";
 		spi-rx-bus-width = <4>;
-		xlnx,connection-mode = <0>;
+		xlnx,connection-mode = <1>;
+		is-stacked = <1>;
 		spi-tx-bus-width = <4>;
 		status = "okay";
 		xlnx,clock-freq = <300000000>;
 		xlnx,qspi-baud-rate-div = <8>;
-		xlnx,qspi-mode = <0>;
+		xlnx,qspi-mode = <1>;
 		spi-max-frequency = <40000000>;
 		xlnx,name = "versal_ps_pspmc_0_psv_pmc_qspi_0";
 		xlnx,qspi-bus-width = <2>;
@@ -2801,10 +2802,23 @@
 		xlnx,has-ss0 = <1>;
 		xlnx,ip-name = "psv_spi";
 		xlnx,has-ss1 = <1>;
-		num-cs = <3>;
+		num-cs = <2>;
 		xlnx,spi-clk-freq-hz = <200000000>;
-		xlnx,has-ss2 = <1>;
+		xlnx,has-ss2 = <0>;
 		xlnx,name = "versal_ps_pspmc_0_psv_spi_1";
+	};
+	&ttc0 {
+		xlnx,ttc-board-interface = "custom";
+		xlnx,ttc-clk2-freq-hz = <150000000>;
+		xlnx,ttc-clk1-clksrc = <0>;
+		status = "okay";
+		xlnx,clock-freq = <150000000>;
+		xlnx,ttc-clk2-clksrc = <0>;
+		xlnx,ip-name = "psv_ttc";
+		xlnx,ttc-clk0-freq-hz = <150000000>;
+		xlnx,ttc-clk1-freq-hz = <150000000>;
+		xlnx,ttc-clk0-clksrc = <0>;
+		xlnx,name = "versal_ps_pspmc_0_psv_ttc_0";
 	};
 	&usb0 {
 		status = "okay";
@@ -2849,6 +2863,9 @@
 			clock-latency-ns = <500000>;
 			opp-microvolt = <1000000>;
 		};
+	};
+	&mc0 {
+		status = "okay";
 	};
 	&psv_cortexr5_0 {
 		xlnx,is-cache-coherent = <0>;
