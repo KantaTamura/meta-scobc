@@ -39,13 +39,16 @@
 		};
 		cam0_mipi_engine_2lane: mipi_cam_engine_2lane@80000000 {
 			compatible = "xlnx,mipi-cam-engine-2lane-1.0";
-			status = "okay";
-			clock-names = "AXI_M_CLK" , "AXI_S_CLK" , "MIPI_CLK";
-			xlnx,axi-m-id-width = <6>;
+			interrupts = < 0 93 4 >;
+			interrupt-parent = <&imux>;
 			xlnx,ip-name = "mipi_cam_engine_2lane";
-			xlnx,edk-iptype = "PERIPHERAL";
 			reg = <0x0 0x80000000 0x0 0x1000>;
 			clocks = <&versal_clk 65>, <&versal_clk 65>, <&misc_clk_0>;
+			xlnx,axi-m-id-width = <6>;
+			xlnx,edk-iptype = "PERIPHERAL";
+			status = "okay";
+			clock-names = "AXI_M_CLK" , "AXI_S_CLK" , "MIPI_CLK";
+			interrupt-names = "MIPI_INT";
 			xlnx,name = "cam0_mipi_engine_2lane";
 		};
 	};
