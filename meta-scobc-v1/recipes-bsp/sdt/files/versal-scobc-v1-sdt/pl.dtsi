@@ -5,6 +5,11 @@
 		#address-cells = <2>;
 		#size-cells = <2>;
 		firmware-name = "sc_obc_v1_versal.pdi";
+		misc_clk_0: misc_clk_0 {
+			compatible = "fixed-clock";
+			clock-frequency = <100000000>;
+			#clock-cells = <0>;
+		};
 		cam0_iic: i2c@80001000 {
 			interrupts = < 0 92 4 >;
 			xlnx,iic-freq-khz = <100>;
@@ -40,7 +45,7 @@
 			xlnx,ip-name = "mipi_cam_engine_2lane";
 			xlnx,edk-iptype = "PERIPHERAL";
 			reg = <0x0 0x80000000 0x0 0x1000>;
-			clocks = <&versal_clk 65>, <&versal_clk 65>, <&versal_clk 66>;
+			clocks = <&versal_clk 65>, <&versal_clk 65>, <&misc_clk_0>;
 			xlnx,name = "cam0_mipi_engine_2lane";
 		};
 	};
