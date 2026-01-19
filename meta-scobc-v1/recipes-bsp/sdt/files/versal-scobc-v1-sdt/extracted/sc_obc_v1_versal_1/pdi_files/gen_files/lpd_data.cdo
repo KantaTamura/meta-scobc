@@ -103,15 +103,15 @@ mask_write 0xff080060 0x3fe 0x300
 marker 0 "Configures MIO Pin 25 peripheral interface mapping"
 mask_write 0xff080064 0x3fe 0x300
 marker 0 "bnk2_en_wk_pu"
-mask_write 0xff080114 0x3ffffff 0x3fff033
+mask_write 0xff080114 0x3ffffff 0x3
 marker 0 "bnk2_en_wk_pd"
 mask_write 0xff080110 0x3ffffff 0xfcc
 marker 0 "bnk2_sel_slew"
-mask_write 0xff080120 0x3ffffff 0
+mask_write 0xff080120 0x3ffffff 0x303ffdc
 marker 0 "bnk2_sel_drv0"
-mask_write 0xff080118 0xffffffff 0xaa555a5a
+mask_write 0xff080118 0xffffffff 0xfffffbfa
 marker 0 "bnk2_sel_drv1"
-mask_write 0xff08011c 0xfffff 0xaaaaa
+mask_write 0xff08011c 0xfffff 0xfaaaf
 marker 0 "bnk2_en_rx_schmitt_hyst"
 mask_write 0xff08010c 0x3ffffff 0x103f012
 marker 0 "MIO pin Tri-state Enables, 31:0"
@@ -147,6 +147,8 @@ mask_write 0xff5e0040 0x8 0
 marker 0 "Control for a clock that will be generated in the LPD, but used in the FPD or PMC as a clock source for the peripheral clock muxes."
 mask_write 0xff5e0100 0x3ff00 0x100
 marker 0 "PS-PL SLAVE INTERFACE"
+marker 0 "afi fs SLCR control register. Do not change the bits durin"
+mask_write 0xff419000 0x300 0
 marker 0 "LPD CLOCK CONTROL REGISTER"
 marker 0 "This register controls the cpm_top_sw clock"
 mask_write 0xff5e015c 0x203ff07 0x2000101
@@ -178,6 +180,8 @@ marker 0 "This register controls the timestamp_ref clock"
 mask_write 0xff5e014c 0x203ff07 0x2000c00
 marker 0 "This register controls the psm_ref clock"
 mask_write 0xff5e0154 0x3ff07 0x300
+marker 0 "TTC APB clock select"
+mask_write 0xff080360 0x3 0
 marker 0 "LPD_SYSMON_SAT"
 marker 0 "UNLOCK LPD SYSMON"
 marker 0 "NPI Lock Register"
@@ -247,6 +251,9 @@ mask_write 0xff5e031c 0x1 0
 marker 0 "SPI1 RESET RELESE"
 marker 0 "Reset for Individual block"
 mask_write 0xff5e0324 0x1 0
+marker 0 "TTC0 RESET RELESE"
+marker 0 "Reset for Individual block"
+mask_write 0xff5e0344 0x1 0
 marker 0 "TIMESTAMP RESET RELEASE"
 marker 0 "Reset for Individual block"
 mask_write 0xff5e0348 0x1 0
