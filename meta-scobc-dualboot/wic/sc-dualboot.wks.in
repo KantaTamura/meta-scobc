@@ -14,12 +14,13 @@
 #   ┌──────────────────────────────────────────────────────────┐
 #   │  boot_golden  (VFAT, /boot from golden rootfs)           │
 #   │  root_golden  (EXT4, golden full rootfs)                 │
+#   │  data         (EXT4, for RAUC artifact repository)       │
 #   │  boot_main    (VFAT, /boot from main rootfs)             │
 #   │  root_main    (EXT4, main full rootfs)                   │
 #   └──────────────────────────────────────────────────────────┘
 
 part boot_golden --use-label --label bootg --fstype=vfat --align 4 --fixed-size=512M --source rootfs --rootfs-dir=${GOLDEN_ROOTFS_DIR}/boot --active
 part root_golden --use-label --label rootg --fstype=ext4 --align 4 --fixed-size=2G   --source rootfs --rootfs-dir=${GOLDEN_ROOTFS_DIR}
-
+part data        --use-label --label data  --fstype=ext4 --align 4 --fixed-size=512M
 part boot_main   --use-label --label bootm --fstype=vfat --align 4 --fixed-size=512M --source rootfs --rootfs-dir=${MAIN_ROOTFS_DIR}/boot
 part root_main   --use-label --label rootm --fstype=ext4 --align 4 --fixed-size=2G   --source rootfs --rootfs-dir=${MAIN_ROOTFS_DIR}

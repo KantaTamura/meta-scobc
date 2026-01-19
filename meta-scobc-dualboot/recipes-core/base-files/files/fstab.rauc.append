@@ -1,0 +1,2 @@
+# RAUC artifact partition
+LABEL=data  /srv/artifacts  ext4  defaults,noatime  0  2

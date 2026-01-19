@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+src="/run/rauc/artifacts/bootbin/boot"
+dst="/boot/boot.bin"
+
+[ -r "$src" ] || { echo "post-install: missing $src" >&2; exit 1; }
+
+install -m 0644 "$src" "$dst"
+sync

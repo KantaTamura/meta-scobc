@@ -11,10 +11,14 @@ RAUC_BUNDLE_DESCRIPTION = "RAUC bundle for sc-image-dev with rootfs and boot par
 
 RAUC_BUNDLE_FORMAT = "verity"
 
-RAUC_BUNDLE_SLOTS = "rootfs boot"
+RAUC_BUNDLE_SLOTS = "rootfs boot bootbin/boot.bin"
 
 RAUC_SLOT_rootfs = "sc-image-dev"
 RAUC_SLOT_rootfs[fstype] = "ext4"
 
 RAUC_SLOT_boot = "sc-image-dev"
 RAUC_SLOT_boot[fstype] = "boot.vfat"
+
+RAUC_SLOT_bootbin/boot.bin = "xilinx-bootbin"
+RAUC_SLOT_bootbin/boot.bin[type] = "file"
+RAUC_SLOT_bootbin/boot.bin[file] = "boot-main.bin"

@@ -1,0 +1,2 @@
+[handlers]
+post-install=/usr/lib/rauc/post-install-bootbin
