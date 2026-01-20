@@ -1,0 +1,45 @@
+&fpga {
+	firmware-name = "sc_obc_v1_versal.pdi";
+};
+
+&amba {
+	hls_m2m_0: hls_m2m@80000000 {
+		compatible = "xlnx,hls-m2m-1.0";
+		interrupts = < 0 92 4 >;
+		xlnx,s-axi-control-wstrb-width = <4>;
+		xlnx,s-axi-control-addr-width = <7>;
+		interrupt-parent = <&gic>;
+		xlnx,ip-name = "hls_m2m";
+		reg = <0x0 0x80000000 0x0 0x1000>;
+		clocks = <&versal_clk 65>;
+		xlnx,s-axi-control-data-width = <32>;
+		xlnx,edk-iptype = "PERIPHERAL";
+		xlnx,s-axi-wstrb-width = <4>;
+		clock-names = "ap_clk";
+		interrupt-names = "interrupt";
+		xlnx,name = "hls_m2m_0";
+	};
+	hls_m2m_1: hls_m2m@80001000 {
+		compatible = "xlnx,hls-m2m-1.0";
+		interrupts = < 0 93 4 >;
+		xlnx,s-axi-control-wstrb-width = <4>;
+		xlnx,s-axi-control-addr-width = <7>;
+		interrupt-parent = <&gic>;
+		xlnx,ip-name = "hls_m2m";
+		reg = <0x0 0x80001000 0x0 0x1000>;
+		clocks = <&versal_clk 65>;
+		xlnx,s-axi-control-data-width = <32>;
+		xlnx,edk-iptype = "PERIPHERAL";
+		xlnx,s-axi-wstrb-width = <4>;
+		clock-names = "ap_clk";
+		interrupt-names = "interrupt";
+		xlnx,name = "hls_m2m_1";
+	};
+};
+
+&hls_m2m_0 {
+	compatible = "sc,sc-hls";
+};
+&hls_m2m_1 {
+	compatible = "sc,sc-hls";
+};
