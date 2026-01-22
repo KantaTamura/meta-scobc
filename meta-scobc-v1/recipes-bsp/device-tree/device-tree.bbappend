@@ -7,6 +7,7 @@ EXTRA_DT_INCLUDE_FILES:append = " \
     norflash.dtsi \
     serial.dtsi \
     timer.dtsi \
+    reset.dtsi \
 "
 
 EXTRA_DT_INCLUDE_FILES:append = " \

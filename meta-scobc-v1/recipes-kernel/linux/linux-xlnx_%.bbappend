@@ -6,4 +6,5 @@ SRC_URI += " \
     file://0003-mtd-spi-nor-spansion-SMPT-fixups-for-S25FS-S.patch \
     file://0004-mtd-spi-nor-spansion-Fix-warning.patch \
     file://i2c.cfg \
+    file://scobc_v1.cfg \
     "
