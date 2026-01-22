@@ -10,4 +10,5 @@ IMAGE_INSTALL:append = " \
     python3-gpiod \
     stress-ng \
     perf \
+    spitools \
     "
