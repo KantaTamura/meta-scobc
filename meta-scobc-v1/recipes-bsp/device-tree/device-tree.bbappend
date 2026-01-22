@@ -8,6 +8,7 @@ EXTRA_DT_INCLUDE_FILES:append = " \
     serial.dtsi \
     timer.dtsi \
     reset.dtsi \
+    can.dtsi \
 "
 
 EXTRA_DT_INCLUDE_FILES:append = " \
