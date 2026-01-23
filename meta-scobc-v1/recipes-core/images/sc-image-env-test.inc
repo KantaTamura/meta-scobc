@@ -12,4 +12,5 @@ IMAGE_INSTALL:append = " \
     perf \
     spitools \
     i2c-tools \
+    can-utils \
     "
