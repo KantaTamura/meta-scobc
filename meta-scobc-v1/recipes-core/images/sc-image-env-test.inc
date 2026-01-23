@@ -11,4 +11,5 @@ IMAGE_INSTALL:append = " \
     stress-ng \
     perf \
     spitools \
+    i2c-tools \
     "
