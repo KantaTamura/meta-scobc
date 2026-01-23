@@ -1130,8 +1130,6 @@ marker 0 "This register controls the sd_dll_ref clock"
 mask_write 0xf1260160 0x203ff07 0x2000100
 marker 0 "This register controls the pmc_pl0_ref clock"
 mask_write 0xf12605c0 0x103ff07 0x1000c00
-marker 0 "This register controls the pmc_pl1_ref clock"
-mask_write 0xf12605c4 0x103ff07 0x1000600
 marker 0 "This register controls the efuse_ref clock"
 mask_write 0xf1260134 0x4 0
 marker 0 "This register controls the usb_suspend clock; This clock is not a PLL based clock. The input to this divider is IROCLK divide by 4."
