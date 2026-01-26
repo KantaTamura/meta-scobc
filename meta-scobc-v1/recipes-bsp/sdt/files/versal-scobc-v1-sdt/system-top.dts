@@ -32,7 +32,6 @@
 		serial2 = &coresight;
 		i2c0 = &cam0_iic;
 		ethernet0 = &gem1;
-		i2c1 = &cam1_iic;
 	};
 	cpus_a72: cpus-a72@0 {
 		compatible = "cpus,cluster";
@@ -51,7 +50,6 @@
 			      <0x0 0xFFFC0000 &versal_ps_pspmc_0_psv_ocm_ram_0_memory 0x0 0xFFFC0000 0x0 0x40000>, 
 			      <0x0 0x80000000 &cam0_mipi_engine_2lane 0x0 0x80000000 0x0 0x1000>, 
 			      <0x0 0x80001000 &cam0_iic 0x0 0x80001000 0x0 0x1000>, 
-			      <0x0 0x80011000 &cam1_iic 0x0 0x80011000 0x0 0x1000>, 
 			      <0x0 0xf0310000 &versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0 0x0 0xf0310000 0x0 0x8000>, 
 			      <0x0 0xf0800000 &coresight 0x0 0xf0800000 0x0 0x10000>, 
 			      <0x0 0xf08d0000 &versal_ps_pspmc_0_psv_coresight_pmc_cti 0x0 0xf08d0000 0x0 0x10000>, 
@@ -178,7 +176,6 @@
 			      <0xFFFC0000 &versal_ps_pspmc_0_psv_ocm_ram_0_memory 0xFFFC0000 0x40000>, 
 			      <0x80000000 &cam0_mipi_engine_2lane 0x80000000 0x1000>, 
 			      <0x80001000 &cam0_iic 0x80001000 0x1000>, 
-			      <0x80011000 &cam1_iic 0x80011000 0x1000>, 
 			      <0xf0310000 &versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0 0xf0310000 0x8000>, 
 			      <0xf0800000 &coresight 0xf0800000 0x10000>, 
 			      <0xf08d0000 &versal_ps_pspmc_0_psv_coresight_pmc_cti 0xf08d0000 0x10000>, 
@@ -308,7 +305,6 @@
 			      <0xFFFC0000 &versal_ps_pspmc_0_psv_ocm_ram_0_memory 0xFFFC0000 0x40000>, 
 			      <0x80000000 &cam0_mipi_engine_2lane 0x80000000 0x1000>, 
 			      <0x80001000 &cam0_iic 0x80001000 0x1000>, 
-			      <0x80011000 &cam1_iic 0x80011000 0x1000>, 
 			      <0xf0310000 &versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0 0xf0310000 0x8000>, 
 			      <0xf0800000 &coresight 0xf0800000 0x10000>, 
 			      <0xf08d0000 &versal_ps_pspmc_0_psv_coresight_pmc_cti 0xf08d0000 0x10000>, 
@@ -439,7 +435,6 @@
 			      <0xFFFC0000 &versal_ps_pspmc_0_psv_ocm_ram_0_memory 0xFFFC0000 0x40000>, 
 			      <0x80000000 &cam0_mipi_engine_2lane 0x80000000 0x1000>, 
 			      <0x80001000 &cam0_iic 0x80001000 0x1000>, 
-			      <0x80011000 &cam1_iic 0x80011000 0x1000>, 
 			      <0xf0310000 &versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0 0xf0310000 0x8000>, 
 			      <0xf08d0000 &versal_ps_pspmc_0_psv_coresight_pmc_cti 0xf08d0000 0x10000>, 
 			      <0xf0980000 &versal_ps_pspmc_0_psv_coresight_lpd_atm 0xf0980000 0x10000>, 
@@ -567,7 +562,6 @@
 			      <0xFFFC0000 &versal_ps_pspmc_0_psv_ocm_ram_0_memory 0xFFFC0000 0x40000>, 
 			      <0x80000000 &cam0_mipi_engine_2lane 0x80000000 0x1000>, 
 			      <0x80001000 &cam0_iic 0x80001000 0x1000>, 
-			      <0x80011000 &cam1_iic 0x80011000 0x1000>, 
 			      <0xf0310000 &versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0 0xf0310000 0x8000>, 
 			      <0xf08d0000 &versal_ps_pspmc_0_psv_coresight_pmc_cti 0xf08d0000 0x10000>, 
 			      <0xf0980000 &versal_ps_pspmc_0_psv_coresight_lpd_atm 0xf0980000 0x10000>, 
