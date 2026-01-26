@@ -105,90 +105,90 @@
 	};
 };
 
-/* &cam0_mipi_engine_2lane { */
-/* 	compatible = "sc,rover-mipi-csi"; */
-/**/
-/* 	ports { */
-/* 		#address-cells = <1>; */
-/* 		#size-cells = <0>; */
-/**/
-/* 		port@0 { */
-/* 			reg = <0>; */
-/* 			mipi_csi0_ep: endpoint { */
-/* 				remote-endpoint = <&cam0_imx296_ep>; */
-/* 				data-lanes = <1 2>; */
-/* 				clock-lanes = <0>; */
-/* 			}; */
-/* 		}; */
-/* 	}; */
-/* }; */
-/**/
-/* &cam0_iic { */
-/* 	#address-cells = <1>; */
-/* 	#size-cells = <0>; */
-/**/
-/* 	imx296_cam0: camera-sensor@1a { */
-/* 		compatible = "sony,imx296"; */
-/* 		reg = <0x1a>; */
-/**/
-/* 		clocks = <&dummy_camera_clk>; */
-/* 		clock-names = "inck"; */
-/**/
-/* 		avdd-supply = <&dummy_reg>; */
-/* 		dvdd-supply = <&dummy_reg>; */
-/* 		ovdd-supply = <&dummy_reg>; */
-/* 		status = "okay"; */
-/**/
-/* 		port { */
-/* 			cam0_imx296_ep: endpoint { */
-/* 				remote-endpoint = <&mipi_csi0_ep>; */
-/* 				data-lanes = <1 2>; */
-/* 				clock-lanes = <0>; */
-/* 			}; */
-/* 		}; */
-/* 	}; */
-/* }; */
-/**/
-/* &cam1_mipi_engine_2lane { */
-/* 	compatible = "sc,rover-mipi-csi"; */
-/**/
-/* 	ports { */
-/* 		#address-cells = <1>; */
-/* 		#size-cells = <0>; */
-/**/
-/* 		port@0 { */
-/* 			reg = <0>; */
-/* 			mipi_csi1_ep: endpoint { */
-/* 				remote-endpoint = <&cam1_imx296_ep>; */
-/* 				data-lanes = <1 2>; */
-/* 				clock-lanes = <0>; */
-/* 			}; */
-/* 		}; */
-/* 	}; */
-/* }; */
-/**/
-/* &cam1_iic { */
-/* 	#address-cells = <1>; */
-/* 	#size-cells = <0>; */
-/**/
-/* 	imx296_cam1: camera-sensor@1a { */
-/* 		compatible = "sony,imx296"; */
-/* 		reg = <0x1a>; */
-/**/
-/* 		clocks = <&dummy_camera_clk>; */
-/* 		clock-names = "inck"; */
-/**/
-/* 		avdd-supply = <&dummy_reg>; */
-/* 		dvdd-supply = <&dummy_reg>; */
-/* 		ovdd-supply = <&dummy_reg>; */
-/* 		status = "okay"; */
-/**/
-/* 		port { */
-/* 			cam1_imx296_ep: endpoint { */
-/* 				remote-endpoint = <&mipi_csi1_ep>; */
-/* 				data-lanes = <1 2>; */
-/* 				clock-lanes = <0>; */
-/* 			}; */
-/* 		}; */
-/* 	}; */
-/* }; */
+&cam0_mipi_engine_2lane {
+	compatible = "sc,rover-mipi-csi";
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			mipi_csi0_ep: endpoint {
+				remote-endpoint = <&cam0_imx296_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
+
+&cam0_iic {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imx296_cam0: camera-sensor@1a {
+		compatible = "sony,imx296";
+		reg = <0x1a>;
+
+		clocks = <&dummy_camera_clk>;
+		clock-names = "inck";
+
+		avdd-supply = <&dummy_reg>;
+		dvdd-supply = <&dummy_reg>;
+		ovdd-supply = <&dummy_reg>;
+		status = "okay";
+
+		port {
+			cam0_imx296_ep: endpoint {
+				remote-endpoint = <&mipi_csi0_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
+
+&cam1_mipi_engine_2lane {
+	compatible = "sc,rover-mipi-csi";
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			mipi_csi1_ep: endpoint {
+				remote-endpoint = <&cam1_imx296_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
+
+&cam1_iic {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imx296_cam1: camera-sensor@1a {
+		compatible = "sony,imx296";
+		reg = <0x1a>;
+
+		clocks = <&dummy_camera_clk>;
+		clock-names = "inck";
+
+		avdd-supply = <&dummy_reg>;
+		dvdd-supply = <&dummy_reg>;
+		ovdd-supply = <&dummy_reg>;
+		status = "okay";
+
+		port {
+			cam1_imx296_ep: endpoint {
+				remote-endpoint = <&mipi_csi1_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
