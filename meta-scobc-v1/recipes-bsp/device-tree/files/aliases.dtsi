@@ -1,0 +1,6 @@
+/ {
+	aliases {
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+	};
+};
