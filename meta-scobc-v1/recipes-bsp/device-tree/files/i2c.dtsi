@@ -1,8 +1,8 @@
 &i2c0 {
 	status = "okay";
 
-	temp0: tmp175@48 {
+	temp0: tmp175@4c {
 		compatible = "ti,tmp175";
-		reg = <0x48>;
+		reg = <0x4c>;
 	};
 };
