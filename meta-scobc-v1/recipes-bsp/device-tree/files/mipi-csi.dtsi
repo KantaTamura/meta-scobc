@@ -20,7 +20,8 @@
 		clocks = <&versal_clk 65>;
 		xlnx,gpo-width = <2>;
 		xlnx,edk-iptype = "PERIPHERAL";
-		xlnx,static-timing-reg-width = <0>; xlnx,sda-level = <1>;
+		xlnx,static-timing-reg-width = <0>;
+		xlnx,sda-level = <1>;
 		clock-names = "s_axi_aclk";
 		xlnx,ten-bit-adr = <0>;
 		xlnx,default-value = <0x0>;
@@ -45,6 +46,32 @@
 		clock-names = "AXI_M_CLK" , "AXI_S_CLK" , "MIPI_CLK";
 		interrupt-names = "MIPI_INT";
 		xlnx,name = "cam0_mipi_engine_2lane";
+	};
+	cam1_iic: i2c@80011000 {
+		interrupts = < 0 94 4 >;
+		xlnx,iic-freq-khz = <100>;
+		compatible = "xlnx,axi-iic-2.1" , "xlnx,xps-iic-2.00.a";
+		xlnx,scl-inertial-delay = <0>;
+		interrupt-parent = <&gic>;
+		xlnx,ip-name = "axi_iic";
+		xlnx,disable-setup-violation-check = <0>;
+		reg = <0x0 0x80011000 0x0 0x1000>;
+		clocks = <&versal_clk 65>;
+		xlnx,gpo-width = <2>;
+		xlnx,edk-iptype = "PERIPHERAL";
+		xlnx,static-timing-reg-width = <0>;
+		xlnx,sda-level = <1>;
+		clock-names = "s_axi_aclk";
+		xlnx,ten-bit-adr = <0>;
+		xlnx,default-value = <0x0>;
+		interrupt-names = "iic2intc_irpt";
+		xlnx,iic-board-interface = "Custom";
+		xlnx,timing-reg-width = <32>;
+		xlnx,iic-freq = <100000>;
+		xlnx,smbus-pmbus-host = <0>;
+		xlnx,name = "cam1_iic";
+		xlnx,axi-aclk-freq-mhz = <100>;
+		xlnx,sda-inertial-delay = <0>;
 	};
 };
 
