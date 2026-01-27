@@ -1,0 +1,110 @@
+&fpga {
+	firmware-name = "sc_obc_v1_versal.pdi";
+	misc_clk_0: misc_clk_0 {
+		compatible = "fixed-clock";
+		clock-frequency = <100000000>;
+		#clock-cells = <0>;
+	};
+};
+
+&amba {
+	cam0_iic: i2c@80001000 {
+		interrupts = < 0 92 4 >;
+		xlnx,iic-freq-khz = <100>;
+		compatible = "xlnx,axi-iic-2.1" , "xlnx,xps-iic-2.00.a";
+		xlnx,scl-inertial-delay = <0>;
+		interrupt-parent = <&gic>;
+		xlnx,ip-name = "axi_iic";
+		xlnx,disable-setup-violation-check = <0>;
+		reg = <0x0 0x80001000 0x0 0x1000>;
+		clocks = <&versal_clk 65>;
+		xlnx,gpo-width = <2>;
+		xlnx,edk-iptype = "PERIPHERAL";
+		xlnx,static-timing-reg-width = <0>;
+		xlnx,sda-level = <1>;
+		clock-names = "s_axi_aclk";
+		xlnx,ten-bit-adr = <0>;
+		xlnx,default-value = <0x0>;
+		interrupt-names = "iic2intc_irpt";
+		xlnx,iic-board-interface = "Custom";
+		xlnx,timing-reg-width = <32>;
+		xlnx,iic-freq = <100000>;
+		xlnx,smbus-pmbus-host = <0>;
+		xlnx,name = "cam0_iic";
+		xlnx,axi-aclk-freq-mhz = <100>;
+		xlnx,sda-inertial-delay = <0>;
+	};
+	cam0_mipi_engine_2lane: mipi_cam_engine_2lane@80000000 {
+		compatible = "xlnx,mipi-cam-engine-2lane-1.0";
+		interrupts = < 0 93 4 >;
+		interrupt-parent = <&gic>;
+		xlnx,ip-name = "mipi_cam_engine_2lane";
+		reg = <0x0 0x80000000 0x0 0x1000>;
+		clocks = <&versal_clk 65>, <&versal_clk 65>, <&misc_clk_0>;
+		xlnx,axi-m-id-width = <6>;
+		xlnx,edk-iptype = "PERIPHERAL";
+		clock-names = "AXI_M_CLK" , "AXI_S_CLK" , "MIPI_CLK";
+		interrupt-names = "MIPI_INT";
+		xlnx,name = "cam0_mipi_engine_2lane";
+	};
+};
+
+&amba {
+	dummy_camera_clk: dummy_camera_clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <74250000>;
+		clock-output-names = "dummy_camera_clk";
+	};
+
+	dummy_reg: dummy-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "dummy";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+	};
+};
+
+&cam0_mipi_engine_2lane {
+	compatible = "sc,rover-mipi-csi";
+
+	ports {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		port@0 {
+			reg = <0>;
+			mipi_csi0_ep: endpoint {
+				remote-endpoint = <&cam0_imx296_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
+
+&cam0_iic {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imx296_cam0: camera-sensor@1a {
+		compatible = "sony,imx296";
+		reg = <0x1a>;
+
+		clocks = <&dummy_camera_clk>;
+		clock-names = "inck";
+
+		avdd-supply = <&dummy_reg>;
+		dvdd-supply = <&dummy_reg>;
+		ovdd-supply = <&dummy_reg>;
+		status = "okay";
+
+		port {
+			cam0_imx296_ep: endpoint {
+				remote-endpoint = <&mipi_csi0_ep>;
+				data-lanes = <1 2>;
+				clock-lanes = <0>;
+			};
+		};
+	};
+};
