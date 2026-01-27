@@ -3,6 +3,8 @@ LICENSE = "MIT"
 
 require sc-image-common.inc
 
+IMAGE_FSTYPES:append = " wic wic.bmap wic.xz"
+
 IMAGE_INSTALL:append = " \
     mmc-utils \
     libgpiod \
@@ -14,3 +16,9 @@ IMAGE_INSTALL:append = " \
     i2c-tools \
     can-utils \
     "
+
+IMAGE_INSTALL:append = " \
+    kernel-module-sc-mipi-csi-driver \
+    i2c-tools \
+    v4l-utils \
+"
