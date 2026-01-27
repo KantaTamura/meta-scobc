@@ -55,17 +55,17 @@ mask_write 0xff080000 0x3fe 0x20
 marker 0 "Configures MIO Pin 1 peripheral interface mapping"
 mask_write 0xff080004 0x3fe 0x20
 marker 0 "Configures MIO Pin 2 peripheral interface mapping"
-mask_write 0xff080008 0x3fe 0x40
+mask_write 0xff080008 0x3fe 0x180
 marker 0 "Configures MIO Pin 3 peripheral interface mapping"
-mask_write 0xff08000c 0x3fe 0x40
+mask_write 0xff08000c 0x3fe 0x180
 marker 0 "Configures MIO Pin 4 peripheral interface mapping"
 mask_write 0xff080010 0x3fe 0x20
 marker 0 "Configures MIO Pin 5 peripheral interface mapping"
 mask_write 0xff080014 0x3fe 0x20
 marker 0 "Configures MIO Pin 6 peripheral interface mapping"
-mask_write 0xff080018 0x3fe 0x40
+mask_write 0xff080018 0x3fe 0x200
 marker 0 "Configures MIO Pin 7 peripheral interface mapping"
-mask_write 0xff08001c 0x3fe 0x40
+mask_write 0xff08001c 0x3fe 0x200
 marker 0 "Configures MIO Pin 8 peripheral interface mapping"
 mask_write 0xff080020 0x3fe 0x40
 marker 0 "Configures MIO Pin 9 peripheral interface mapping"
@@ -103,21 +103,21 @@ mask_write 0xff080060 0x3fe 0x300
 marker 0 "Configures MIO Pin 25 peripheral interface mapping"
 mask_write 0xff080064 0x3fe 0x300
 marker 0 "bnk2_en_wk_pu"
-mask_write 0xff080114 0x3ffffff 0x3fff033
+mask_write 0xff080114 0x3ffffff 0x3
 marker 0 "bnk2_en_wk_pd"
-mask_write 0xff080110 0x3ffffff 0xfcc
+mask_write 0xff080110 0x3ffffff 0xf00
 marker 0 "bnk2_sel_slew"
-mask_write 0xff080120 0x3ffffff 0
+mask_write 0xff080120 0x3ffffff 0x303ffd8
 marker 0 "bnk2_sel_drv0"
-mask_write 0xff080118 0xffffffff 0xaa555a5a
+mask_write 0xff080118 0xffffffff 0xfffffbea
 marker 0 "bnk2_sel_drv1"
-mask_write 0xff08011c 0xfffff 0xaaaaa
+mask_write 0xff08011c 0xfffff 0xfaaaf
 marker 0 "bnk2_en_rx_schmitt_hyst"
-mask_write 0xff08010c 0x3ffffff 0x103f012
+mask_write 0xff08010c 0x3ffffff 0x103f01a
 marker 0 "MIO pin Tri-state Enables, 31:0"
-mask_write 0xff080204 0x3ffffff 0xfc0021
+mask_write 0xff080204 0x3ffffff 0xfc0025
 marker 0 "Select the PS MIO or PMC MIO"
-mask_write 0xff080410 0xc2c 0xc0c
+mask_write 0xff080410 0x5c2c 0x5c0c
 marker 0 "LOCKING SLCR"
 marker 0 "LPD IOU SLCR Write protection register for IO Mux logic"
 mask_write 0xff080728 0x1 0x1
@@ -147,6 +147,8 @@ mask_write 0xff5e0040 0x8 0
 marker 0 "Control for a clock that will be generated in the LPD, but used in the FPD or PMC as a clock source for the peripheral clock muxes."
 mask_write 0xff5e0100 0x3ff00 0x100
 marker 0 "PS-PL SLAVE INTERFACE"
+marker 0 "afi fs SLCR control register. Do not change the bits durin"
+mask_write 0xff419000 0x300 0
 marker 0 "LPD CLOCK CONTROL REGISTER"
 marker 0 "This register controls the cpm_top_sw clock"
 mask_write 0xff5e015c 0x203ff07 0x2000101
@@ -168,8 +170,14 @@ marker 0 "This register controls the uart0_ref clock"
 mask_write 0xff5e0128 0x203ff07 0x2000c00
 marker 0 "This register controls the uart1_ref clock"
 mask_write 0xff5e012c 0x203ff07 0x2000c00
+marker 0 "This register controls the spi0_ref clock"
+mask_write 0xff5e0130 0x203ff07 0x2000600
 marker 0 "This register controls the spi1_ref clock"
 mask_write 0xff5e0134 0x203ff07 0x2000600
+marker 0 "This register controls the can0_ref clock"
+mask_write 0xff5e0138 0x203ff07 0x2000c00
+marker 0 "This register controls the i2c0_ref clock"
+mask_write 0xff5e0140 0x203ff07 0x2000c00
 marker 0 "This register controls the dbg_lpd_ref clock"
 mask_write 0xff5e0148 0x203ff07 0x2000300
 marker 0 "This register controls the dbg_tstmp clock"
@@ -178,6 +186,8 @@ marker 0 "This register controls the timestamp_ref clock"
 mask_write 0xff5e014c 0x203ff07 0x2000c00
 marker 0 "This register controls the psm_ref clock"
 mask_write 0xff5e0154 0x3ff07 0x300
+marker 0 "TTC APB clock select"
+mask_write 0xff080360 0x3 0
 marker 0 "LPD_SYSMON_SAT"
 marker 0 "UNLOCK LPD SYSMON"
 marker 0 "NPI Lock Register"
@@ -244,9 +254,21 @@ mask_write 0xff5e0318 0x1 0
 marker 0 "UART1 RESET RELESE"
 marker 0 "Reset for Individual block"
 mask_write 0xff5e031c 0x1 0
+marker 0 "SPI0 RESET RELESE"
+marker 0 "Reset for Individual block"
+mask_write 0xff5e0320 0x1 0
 marker 0 "SPI1 RESET RELESE"
 marker 0 "Reset for Individual block"
 mask_write 0xff5e0324 0x1 0
+marker 0 "CAN0 RESET RELESE"
+marker 0 "Reset for Individual block"
+mask_write 0xff5e0328 0x1 0
+marker 0 "I2C0 RESET RELESE"
+marker 0 "Reset for Individual block"
+mask_write 0xff5e0330 0x1 0
+marker 0 "TTC0 RESET RELESE"
+marker 0 "Reset for Individual block"
+mask_write 0xff5e0344 0x1 0
 marker 0 "TIMESTAMP RESET RELEASE"
 marker 0 "Reset for Individual block"
 mask_write 0xff5e0348 0x1 0
@@ -312,10 +334,10 @@ marker 0 "GEM TSU EXTERNAL CLOCK"
 marker 0 "GPIO PROGRAMMING"
 marker 0 "DIR MODE BANK 2"
 marker 0 "Direction mode (GPIO Bank0, MIO)"
-mask_write 0xff0b0204 0x3ffffff 0xfcc
+mask_write 0xff0b0204 0x3ffffff 0xf00
 marker 0 "OUTPUT ENABLE BANK 2"
 marker 0 "Output enable (GPIO Bank0, MIO)"
-mask_write 0xff0b0208 0x3ffffff 0xfcc
+mask_write 0xff0b0208 0x3ffffff 0xf00
 marker 0 "MASK_DATA_1_LSW HIGH BANK [67:52]"
 marker 0 "Maskable Output Data (GPIO Bank0, MIO, Lower 16bits)"
 mask_write 0xff0b0000 0xffffffff 0xffff0000

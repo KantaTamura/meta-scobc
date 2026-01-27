@@ -1676,6 +1676,18 @@
 		xlnx,dma-mode = <1>;
 		xlnx,name = "versal_ps_pspmc_0_psv_adma_7";
 	};
+	&can0 {
+		xlnx,can-rx-dpth = <64>;
+		status = "okay";
+		xlnx,num-of-rx-mb-buf = <48>;
+		xlnx,can-clk-freq-hz = <100000000>;
+		xlnx,ip-name = "psv_canfd";
+		xlnx,rx-mode = <0>;
+		xlnx,can-tx-dpth = <32>;
+		xlnx,num-of-tx-buf = <32>;
+		xlnx,can-board-interface = "custom";
+		xlnx,name = "versal_ps_pspmc_0_psv_canfd_0";
+	};
 	&coresight {
 		status = "okay";
 		xlnx,ip-name = "psv_coresight";
@@ -1716,6 +1728,14 @@
 		xlnx,ip-name = "psv_gpio";
 		emio-gpio-width = "";
 		xlnx,name = "versal_ps_pspmc_0_psv_gpio_2";
+	};
+	&i2c0 {
+		status = "okay";
+		xlnx,clock-freq = <100000000>;
+		xlnx,i2c-clk-freq-hz = <100000000>;
+		xlnx,ip-name = "psv_i2c";
+		xlnx,iic-board-interface = "custom";
+		xlnx,name = "versal_ps_pspmc_0_psv_i2c_0";
 	};
 	&ipi0 {
 		xlnx,cpu-name = "A72";
@@ -2595,17 +2615,18 @@
 		//* hw design is missing feedback clock that's why spi-max-frequency is 40MHz */;
 		xlnx,qspi-fbclk = <0>;
 		xlnx,baud-rate-div = <8>;
-		num-cs = <1>;
+		num-cs = <2>;
 		xlnx,qspi-clk-freq-hz = <300000000>;
 		xlnx,bus-width = <2>;
 		xlnx,ip-name = "psv_pmc_qspi";
 		spi-rx-bus-width = <4>;
-		xlnx,connection-mode = <0>;
+		xlnx,connection-mode = <1>;
+		is-stacked = <1>;
 		spi-tx-bus-width = <4>;
 		status = "okay";
 		xlnx,clock-freq = <300000000>;
 		xlnx,qspi-baud-rate-div = <8>;
-		xlnx,qspi-mode = <0>;
+		xlnx,qspi-mode = <1>;
 		spi-max-frequency = <40000000>;
 		xlnx,name = "versal_ps_pspmc_0_psv_pmc_qspi_0";
 		xlnx,qspi-bus-width = <2>;
@@ -2795,16 +2816,40 @@
 		xlnx,uart-clk-freq-hz = <100000000>;
 		xlnx,name = "versal_ps_pspmc_0_psv_sbsauart_1";
 	};
+	&spi0 {
+		status = "okay";
+		xlnx,spi-board-interface = "custom";
+		xlnx,has-ss0 = <1>;
+		xlnx,ip-name = "psv_spi";
+		xlnx,has-ss1 = <0>;
+		num-cs = <1>;
+		xlnx,spi-clk-freq-hz = <200000000>;
+		xlnx,has-ss2 = <0>;
+		xlnx,name = "versal_ps_pspmc_0_psv_spi_0";
+	};
 	&spi1 {
 		status = "okay";
 		xlnx,spi-board-interface = "custom";
 		xlnx,has-ss0 = <1>;
 		xlnx,ip-name = "psv_spi";
 		xlnx,has-ss1 = <1>;
-		num-cs = <3>;
+		num-cs = <2>;
 		xlnx,spi-clk-freq-hz = <200000000>;
-		xlnx,has-ss2 = <1>;
+		xlnx,has-ss2 = <0>;
 		xlnx,name = "versal_ps_pspmc_0_psv_spi_1";
+	};
+	&ttc0 {
+		xlnx,ttc-board-interface = "custom";
+		xlnx,ttc-clk2-freq-hz = <150000000>;
+		xlnx,ttc-clk1-clksrc = <0>;
+		status = "okay";
+		xlnx,clock-freq = <150000000>;
+		xlnx,ttc-clk2-clksrc = <0>;
+		xlnx,ip-name = "psv_ttc";
+		xlnx,ttc-clk0-freq-hz = <150000000>;
+		xlnx,ttc-clk1-freq-hz = <150000000>;
+		xlnx,ttc-clk0-clksrc = <0>;
+		xlnx,name = "versal_ps_pspmc_0_psv_ttc_0";
 	};
 	&usb0 {
 		status = "okay";
@@ -2849,6 +2894,9 @@
 			clock-latency-ns = <500000>;
 			opp-microvolt = <1000000>;
 		};
+	};
+	&mc0 {
+		status = "okay";
 	};
 	&psv_cortexr5_0 {
 		xlnx,is-cache-coherent = <0>;
