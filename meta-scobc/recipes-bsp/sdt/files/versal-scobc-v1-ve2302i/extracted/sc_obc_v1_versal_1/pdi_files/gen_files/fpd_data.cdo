@@ -73,6 +73,8 @@ marker 0 "This register controls the fpd_lsbus clock"
 mask_write 0xfd1a0108 0x203ff07 0x2000800
 marker 0 "This register controls the dbg_fpd clock"
 mask_write 0xfd1a0114 0x203ff07 0x2000300
+marker 0 "SWDT clock source select"
+mask_write 0xfd610100 0x1 0
 marker 0 "FPD_SYSMON_SAT"
 marker 0 "UNLOCK FPD SYSMON"
 marker 0 "NPI Lock Register"
@@ -127,6 +129,9 @@ marker 0 "LOCK PMC SYSMON"
 marker 0 "NPI Lock Register"
 write 0xf127000c 0x1
 marker 0 "FPD PERIPHERAL RESET RELESE"
+marker 0 "FPD WDT RESET RELESE"
+marker 0 "Reset for Individual block"
+mask_write 0xfd1a0314 0x1 0
 marker 0 "RELEASE DEBUG RESETS IF DEBUGGER IS ENABLE"
 marker 0 "Reset for Individual block"
 mask_write 0xfd1a030c 0x1 0

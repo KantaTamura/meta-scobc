@@ -2832,6 +2832,14 @@
 		xlnx,enable-superspeed = <0>;
 		xlnx,name = "versal_ps_pspmc_0_psv_usb_xhci_0";
 	};
+	&watchdog {
+		compatible = "xlnx,versal-wwdt-1.0" , "xlnx,versal-wwdt";
+		xlnx,winwdt-example = <1>;
+		status = "okay";
+		xlnx,ip-name = "psv_wwdt";
+		xlnx,wdt-clk-freq-hz = <100000000>;
+		xlnx,name = "versal_ps_pspmc_0_psv_wwdt_1";
+	};
 	&gic_its {
 		status = "okay";
 	};
