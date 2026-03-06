@@ -1,0 +1,5 @@
+# Assign WDT expiry action(Subsystem Restart) for FPD WDT
+# XIL_NODETYPE_EVENT_ERROR_PMC_ERR2: 0x28104000
+# XIL_EVENT_ERROR_MASK_FPD_SWDT:     0x00000002
+# ref. embeddedsw/lib/standalone/src/common/versal/xil_error_node.h
+em_set_action 0x2810C000 0x6 0x2
