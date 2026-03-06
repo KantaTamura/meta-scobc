@@ -9,6 +9,10 @@ KERNEL_ROOT_SD:remove = "root=/dev/\${bootdev}${PARTNUM}"
 KERNEL_ROOT_SD:prepend = "root=PARTUUID=\${rootuuid} "
 
 KERNEL_ROOT_SD:append = " rauc.slot=\${raucslot}"
+KERNEL_ROOT_SD:append = " \
+    xilinx_wwdt.wwdt_timeout=${XILINX_FPD_WWDT_TIMEOUT} \
+    xilinx_wwdt.closed_window_percent=${XILINX_FPD_WWDT_CLOSED_WINDOW_PERCENT} \
+"
 
 do_compile:append() {
     emit_variant_cmd() {
