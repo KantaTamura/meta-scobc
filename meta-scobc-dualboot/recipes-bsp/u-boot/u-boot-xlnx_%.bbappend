@@ -7,6 +7,7 @@ SRC_URI:append = " \
 
 UBOOT_EXTRA_CFGS:append = " \
     multiboot.cfg \
+    watchdog.cfg \
 "
 
 UBOOT_EXTRA_CFGS[golden] = " \
