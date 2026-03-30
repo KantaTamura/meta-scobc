@@ -1,0 +1,39 @@
+header:
+  version: 19
+
+local_conf_header:
+  fitimage: |
+
+    # activate ub image
+    KERNEL_CLASSES:append = " kernel-fitimage"
+    KERNEL_IMAGETYPES:append = " fitImage vmlinux"
+    RAMDISK_IMAGE:${MACHINE} = "sc-image-minimal-versal-scobc-v1-sdt-full.cpio.gz.u-boot"
+    KERNEL_IMAGE:${MACHINE} = "Image"
+    FIT_KERNEL_COMP_ALG="none"
+    FIT_KERNEL_COMP_ALG_EXTENSION=""
+    INITRAMFS_IMAGE = "sc-image-minimal"
+    IMAGE_FSTYPES:versal = "cpio cpio.gz cpio.gz.u-boot ext4 tar.gz jffs2"
+    IMAGE_FSTYPES:remove:pn-sc-image-minimal = "wic wic.xz wic.bmap"
+    IMAGE_FSTYPES:remove:pn-sc-image-dev = "wic wic.xz wic.bmap"
+
+    # DDR for APU :  0x8_0000_0000 - 0x8_7fff_ffff seems unavailable during boot
+    # WARNING: fit-image-sc-image-minimal.its:15.33-44: Value 0x0000000800200000 truncated to 0x00200000
+    UBOOT_ENTRYPOINT  ?= "0x000200000"
+    UBOOT_LOADADDRESS ?= "0x000200000"
+    BOOTMODE = "generic"
+    BOOTFILE_EXT = ""
+
+    # boot.scr (not used?)
+    DEVICETREE_OFFSET:${MACHINE} = "0x800001000"
+    KERNEL_OFFSET:${MACHINE}  = "0x800200000"
+    RAMDISK_OFFSET:${MACHINE} = "0x804000000"
+    FIT_IMAGE:${MACHINE} = "image.ub"
+    FIT_IMAGE_OFFSET:${MACHINE} = "0x810000000"
+    PRE_BOOTENV:${MACHINE} = ""
+
+    # packages
+    CORE_IMAGE_EXTRA_INSTALL = " curl openssh openssh-ssh openssh-sshd openssh-scp socat wget strace libgpiod libmetal open-amp opencv gdb gdbserver netcat tcpdump "
+
+    # device tree
+    ENABLE_OPENAMP_DTSI = "1"
+
