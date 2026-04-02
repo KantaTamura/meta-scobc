@@ -703,3 +703,4 @@
 		#ranges-size-cells = <0x1>;
 	};
 };
+#include "versal-scobc-v1-ve2302i.dtsi"

@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: GPL-2.0
+
+//#include <dt-bindings/net/ti-dp83867.h>
+
+/ {
+	chosen {
+		bootargs = "console=ttyAMA0,115200";
+	};
+
+	gpio-restart {
+		compatible = "gpio-restart";
+		gpios = <&gpio1 28 0>;
+		active-delay = <2000>; /* Assert reset pin for 2000 ms */
+		priority = <130>; /* 1 Higher than PSCI reset(129) */
+	};
+};
+
+&gem1 {
+	status = "okay";
+	iommus = <&smmu 0x235>;
+	phy-handle = <&phy>;
+	phy-mode = "rgmii-id";
+
+	mdio: mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		phy: ethernet-phy@1 {
+			compatible = "ethernet-phy-id2000.a231";
+			reg = <1>;
+			ti,rx-internal-delay = <0x6>; //<DP83867_RGMIIDCTL_1_75_NS>;
+			ti,tx-internal-delay = <0x6>; //<DP83867_RGMIIDCTL_1_75_NS>;
+		};
+	};
+};
+
+&qspi {
+	status = "okay";
+
+	s25fs512s0: flash@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		spi-max-frequency = <50000000>;
+		reg = <0>;
+	};
+};
+
+&usb0 {
+        status = "okay";
+};
+
+&dwc3_0 {
+        status = "okay";
+        dr_mode = "host";
+        maximum-speed = "high-speed";
+        snps,dis_u2_susphy_quirk;
+        snps,dis_u3_susphy_quirk;
+        snps,usb3_lpm_capable;
+};
+
+&serial1 {
+	/* Used by RPU */
+	status = "disabled";
+};
+
+
+&ttc0 {
+	/* Used by RPU */
+	status = "disabled";
+};
+
+&ttc1 {
+	/* Used by others */
+	status = "okay";
+};

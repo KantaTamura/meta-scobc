@@ -28,7 +28,9 @@ if {[file exists $outdir]} {
 	file delete -force $outdir
 }
 
+# set_dt_param -repo /home/kanta/workspace/sc/meta-scobc/data.local/system-device-tree-xlnx
 set_dt_param -debug enable
+set_dt_param -board_dts versal-scobc-v1-ve2302i
 set_dt_param -dir $outdir
 set_dt_param -xsa $xsa
 
