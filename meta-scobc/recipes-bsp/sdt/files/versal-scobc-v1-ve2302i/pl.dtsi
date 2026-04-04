@@ -4,6 +4,6 @@
 		compatible = "simple-bus";
 		#address-cells = <2>;
 		#size-cells = <2>;
-		firmware-name = "sc_obc_v1_versal_93b25801.pdi";
+		firmware-name = "sc_obc_v1_versal_967bd43a.pdi";
 	};
 };
