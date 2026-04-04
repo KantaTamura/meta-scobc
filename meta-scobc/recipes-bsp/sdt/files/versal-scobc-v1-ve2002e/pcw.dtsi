@@ -416,13 +416,6 @@
 			reg = <0x0 0xf11f0000 0x0 0x10000>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_bbram_ctrl";
 		};
-		versal_ps_pspmc_0_psv_pmc_cfi_cframe_0: versal_ps_pspmc_0_psv_pmc_cfi_cframe_0@f12d0000 {
-			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
-			status = "okay";
-			xlnx,ip-name = "psv_pmc_cfi_cframe";
-			reg = <0x0 0xf12d0000 0x0 0x1000>;
-			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_0";
-		};
 		versal_ps_pspmc_0_psv_pmc_cfi_cframe_1: versal_ps_pspmc_0_psv_pmc_cfi_cframe_1@f12d2000 {
 			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
 			status = "okay";
@@ -528,13 +521,6 @@
 			reg = <0x0 0xf12ee000 0x0 0x1000>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_bcast";
 		};
-		versal_ps_pspmc_0_psv_pmc_cfu_apb_0: versal_ps_pspmc_0_psv_pmc_cfu_apb_0@f12b0000 {
-			compatible = "xlnx,psv-pmc-cfu-apb-1.0";
-			status = "okay";
-			xlnx,ip-name = "psv_pmc_cfu_apb";
-			reg = <0x0 0xf12b0000 0x0 0x10000>;
-			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfu_apb_0";
-		};
 		versal_ps_pspmc_0_psv_pmc_efuse_cache: versal_ps_pspmc_0_psv_pmc_efuse_cache@f1250000 {
 			compatible = "xlnx,psv-pmc-efuse-cache-1.0";
 			status = "okay";
@@ -565,13 +551,6 @@
 			xlnx,ip-name = "psv_pmc_iou_slcr";
 			reg = <0x0 0xf1060000 0x0 0x10000>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_iou_slcr_0";
-		};
-		versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0: versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0@f0310000 {
-			compatible = "xlnx,psv-pmc-ppu1-mdm-1.0";
-			status = "okay";
-			xlnx,ip-name = "psv_pmc_ppu1_mdm";
-			reg = <0x0 0xf0310000 0x0 0x8000>;
-			xlnx,name = "versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0";
 		};
 		versal_ps_pspmc_0_psv_pmc_ram: versal_ps_pspmc_0_psv_pmc_ram@f2000000 {
 			compatible = "xlnx,psv-pmc-ram-1.0";
@@ -734,14 +713,6 @@
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_tmr_manager_0";
 			xlnx,lmb-awidth = <32>;
 		};
-		versal_ps_pspmc_0_psv_pmc_trng: versal_ps_pspmc_0_psv_pmc_trng@f1230000 {
-			xlnx,device-id = <0>;
-			compatible = "xlnx,psv-pmc-trng-1.0";
-			status = "okay";
-			xlnx,ip-name = "psv_pmc_trng";
-			reg = <0x0 0xf1230000 0x0 0x10000>;
-			xlnx,name = "versal_ps_pspmc_0_psv_pmc_trng";
-		};
 		versal_ps_pspmc_0_psv_psm_global_reg: versal_ps_pspmc_0_psv_psm_global_reg@ffc90000 {
 			compatible = "xlnx,psv-psm-global-reg-1.0";
 			status = "okay";
@@ -850,6 +821,7 @@
 			xlnx,fit2-interrupt = <0>;
 			xlnx,use-fit3 = <0>;
 			xlnx,use-fit4 = <0>;
+			xlnx,io-baseaddr = <0xffffffff 0xffffffff>;
 			xlnx,uart-use-parity = <0>;
 			xlnx,lmb-dwidth = <32>;
 			xlnx,fit4-no-clocks = <6216>;
@@ -1853,74 +1825,126 @@
 		xlnx,buffer-index = <0x2>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <62>;
 		xlnx,bit-position = <2>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_0";
-		versal_ps_pspmc_0_psv_ipi_0_0: child@0 {
+		ipi_0_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f04a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0480>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_1: child@1 {
+		ipi_0_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f04e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f04c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_2: child@2 {
+		ipi_0_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0520>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0500>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_3: child@3 {
+		ipi_0_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0560>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0540>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_4: child@4 {
+		ipi_0_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f05a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0580>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_5: child@5 {
+		ipi_0_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f05e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f05c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_6: child@6 {
+		ipi_0_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_7: child@7 {
+		ipi_0_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0460>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0440>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_8: child@8 {
+		ipi_0_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_0_9: child@9 {
+		ipi_0_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0420>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0400>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi1 {
@@ -1930,74 +1954,126 @@
 		xlnx,buffer-index = <0x3>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <63>;
 		xlnx,bit-position = <3>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_1";
-		versal_ps_pspmc_0_psv_ipi_1_0: child@0 {
+		ipi_1_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f06a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0680>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_1: child@1 {
+		ipi_1_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f06e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f06c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_2: child@2 {
+		ipi_1_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0720>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0700>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_3: child@3 {
+		ipi_1_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0760>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0740>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_4: child@4 {
+		ipi_1_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f07a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0780>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_5: child@5 {
+		ipi_1_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f07e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f07c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_6: child@6 {
+		ipi_1_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_7: child@7 {
+		ipi_1_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0660>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0640>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_8: child@8 {
+		ipi_1_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_1_9: child@9 {
+		ipi_1_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0620>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0600>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi2 {
@@ -2007,74 +2083,126 @@
 		xlnx,buffer-index = <0x4>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <64>;
 		xlnx,bit-position = <4>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_2";
-		versal_ps_pspmc_0_psv_ipi_2_0: child@0 {
+		ipi_2_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f08a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0880>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_1: child@1 {
+		ipi_2_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f08e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f08c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_2: child@2 {
+		ipi_2_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0920>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0900>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_3: child@3 {
+		ipi_2_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0960>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0940>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_4: child@4 {
+		ipi_2_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f09a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0980>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_5: child@5 {
+		ipi_2_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f09e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f09c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_6: child@6 {
+		ipi_2_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_7: child@7 {
+		ipi_2_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0860>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0840>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_8: child@8 {
+		ipi_2_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_2_9: child@9 {
+		ipi_2_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0820>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0800>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi3 {
@@ -2084,74 +2212,126 @@
 		xlnx,buffer-index = <0x5>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <65>;
 		xlnx,bit-position = <5>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_3";
-		versal_ps_pspmc_0_psv_ipi_3_0: child@0 {
+		ipi_3_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0aa0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0a80>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_1: child@1 {
+		ipi_3_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0ae0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f0ac0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_2: child@2 {
+		ipi_3_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0b20>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0b00>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_3: child@3 {
+		ipi_3_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0b60>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0b40>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_4: child@4 {
+		ipi_3_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0ba0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0b80>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_5: child@5 {
+		ipi_3_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0be0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f0bc0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_6: child@6 {
+		ipi_3_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_7: child@7 {
+		ipi_3_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0a60>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0a40>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_8: child@8 {
+		ipi_3_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_3_9: child@9 {
+		ipi_3_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0a20>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0a00>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi4 {
@@ -2161,74 +2341,126 @@
 		xlnx,buffer-index = <0x6>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <66>;
 		xlnx,bit-position = <6>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_4";
-		versal_ps_pspmc_0_psv_ipi_4_0: child@0 {
+		ipi_4_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0ca0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0c80>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_1: child@1 {
+		ipi_4_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0ce0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f0cc0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_2: child@2 {
+		ipi_4_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0d20>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0d00>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_3: child@3 {
+		ipi_4_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0d60>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0d40>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_4: child@4 {
+		ipi_4_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0da0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0d80>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_5: child@5 {
+		ipi_4_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0de0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f0dc0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_6: child@6 {
+		ipi_4_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_7: child@7 {
+		ipi_4_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0c60>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0c40>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_8: child@8 {
+		ipi_4_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_4_9: child@9 {
+		ipi_4_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0c20>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0c00>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi5 {
@@ -2238,74 +2470,126 @@
 		xlnx,buffer-index = <0x7>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <67>;
 		xlnx,bit-position = <7>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_5";
-		versal_ps_pspmc_0_psv_ipi_5_0: child@0 {
+		ipi_5_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0ea0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0e80>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_1: child@1 {
+		ipi_5_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0ee0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f0ec0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_2: child@2 {
+		ipi_5_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0f20>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0f00>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_3: child@3 {
+		ipi_5_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0f60>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0f40>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_4: child@4 {
+		ipi_5_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0fa0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0f80>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_5: child@5 {
+		ipi_5_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0fe0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f0fc0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_6: child@6 {
+		ipi_5_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_7: child@7 {
+		ipi_5_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0e60>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0e40>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_8: child@8 {
+		ipi_5_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_5_9: child@9 {
+		ipi_5_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0e20>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0e00>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi6 {
@@ -2315,58 +2599,110 @@
 		xlnx,buffer-index = "NIL";
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff3a0000 0x0 0x10000>;
+		reg-names = "ctrl";
 		xlnx,int-id = <68>;
 		xlnx,bit-position = <9>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_6";
-		versal_ps_pspmc_0_psv_ipi_6_0: child@0 {
+		ipi_6_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_1: child@1 {
+		ipi_6_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_2: child@2 {
+		ipi_6_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_3: child@3 {
+		ipi_6_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_4: child@4 {
+		ipi_6_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_5: child@5 {
+		ipi_6_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_6: child@6 {
+		ipi_6_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_7: child@7 {
+		ipi_6_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_8: child@8 {
+		ipi_6_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_6_9: child@9 {
+		ipi_6_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi_pmc {
@@ -2376,74 +2712,126 @@
 		xlnx,buffer-index = <0x1>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <59>;
 		xlnx,bit-position = <1>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_pmc";
-		versal_ps_pspmc_0_psv_ipi_pmc_0: child@0 {
+		ipi_pmc_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f02a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0280>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_1: child@1 {
+		ipi_pmc_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f02e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f02c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_2: child@2 {
+		ipi_pmc_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0320>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0300>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_3: child@3 {
+		ipi_pmc_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0360>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0340>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_4: child@4 {
+		ipi_pmc_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f03a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0380>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_5: child@5 {
+		ipi_pmc_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f03e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f03c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_6: child@6 {
+		ipi_pmc_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_7: child@7 {
+		ipi_pmc_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0260>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0240>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_8: child@8 {
+		ipi_pmc_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_9: child@9 {
+		ipi_pmc_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0220>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0200>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi_pmc_nobuf {
@@ -2453,58 +2841,110 @@
 		xlnx,buffer-index = "NIL";
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff390000 0x0 0x10000>;
+		reg-names = "ctrl";
 		xlnx,int-id = <60>;
 		xlnx,bit-position = <8>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_pmc_nobuf";
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_0: child@0 {
+		ipi_pmc_nobuf_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_1: child@1 {
+		ipi_pmc_nobuf_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_2: child@2 {
+		ipi_pmc_nobuf_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_3: child@3 {
+		ipi_pmc_nobuf_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_4: child@4 {
+		ipi_pmc_nobuf_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_5: child@5 {
+		ipi_pmc_nobuf_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_6: child@6 {
+		ipi_pmc_nobuf_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_7: child@7 {
+		ipi_pmc_nobuf_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_8: child@8 {
+		ipi_pmc_nobuf_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_pmc_nobuf_9: child@9 {
+		ipi_pmc_nobuf_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&ipi_psm {
@@ -2514,74 +2954,126 @@
 		xlnx,buffer-index = <0x0>;
 		xlnx,ip-name = "psv_ipi";
 		xlnx,ipi-target-count = <10>;
+		reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
+		reg-names = "ctrl" , "msg";
 		xlnx,int-id = <61>;
 		xlnx,bit-position = <0>;
 		xlnx,name = "versal_ps_pspmc_0_psv_ipi_psm";
-		versal_ps_pspmc_0_psv_ipi_psm_0: child@0 {
+		ipi_psm_to_ipi_0: child@ff330000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <4>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f00a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <2>;
+			reg = <0x0 0xff330000 0x0 0x10000 0x0 0xff3f0400 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x2>;
 			xlnx,ipi-req-msg-buf = <0xff3f0080>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_1: child@1 {
+		ipi_psm_to_ipi_1: child@ff340000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <8>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f00e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <3>;
+			reg = <0x0 0xff340000 0x0 0x10000 0x0 0xff3f0600 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x3>;
 			xlnx,ipi-req-msg-buf = <0xff3f00c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_2: child@2 {
+		ipi_psm_to_ipi_2: child@ff350000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <16>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0120>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <4>;
+			reg = <0x0 0xff350000 0x0 0x10000 0x0 0xff3f0800 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x4>;
 			xlnx,ipi-req-msg-buf = <0xff3f0100>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_3: child@3 {
+		ipi_psm_to_ipi_3: child@ff360000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <32>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0160>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <5>;
+			reg = <0x0 0xff360000 0x0 0x10000 0x0 0xff3f0a00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x5>;
 			xlnx,ipi-req-msg-buf = <0xff3f0140>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_4: child@4 {
+		ipi_psm_to_ipi_4: child@ff370000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <64>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f01a0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <6>;
+			reg = <0x0 0xff370000 0x0 0x10000 0x0 0xff3f0c00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x6>;
 			xlnx,ipi-req-msg-buf = <0xff3f0180>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_5: child@5 {
+		ipi_psm_to_ipi_5: child@ff380000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <128>;
+			xlnx,cpu-name = "A72";
 			xlnx,ipi-rsp-msg-buf = <0xff3f01e0>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <7>;
+			reg = <0x0 0xff380000 0x0 0x10000 0x0 0xff3f0e00 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x7>;
 			xlnx,ipi-req-msg-buf = <0xff3f01c0>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_6: child@6 {
+		ipi_psm_to_ipi_6: child@ff3a0000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <512>;
+			xlnx,cpu-name = "A72";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <9>;
+			reg = <0x0 0xff3a0000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_7: child@7 {
+		ipi_psm_to_ipi_pmc: child@ff320000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <2>;
+			xlnx,cpu-name = "PMC";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0060>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <1>;
+			reg = <0x0 0xff320000 0x0 0x10000 0x0 0xff3f0200 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x1>;
 			xlnx,ipi-req-msg-buf = <0xff3f0040>;
+			reg-names = "ctrl" , "msg";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_8: child@8 {
+		ipi_psm_to_ipi_pmc_nobuf: child@ff390000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <256>;
+			xlnx,cpu-name = "PMC";
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <8>;
+			reg = <0x0 0xff390000 0x0 0x10000>;
 			xlnx,ipi-buf-index = <0xffff>;
+			reg-names = "ctrl";
 		};
-		versal_ps_pspmc_0_psv_ipi_psm_9: child@9 {
+		ipi_psm_to_ipi_psm: child@ff310000 {
+			compatible = "xlnx,versal-ipi-dest-mailbox";
 			xlnx,ipi-bitmask = <1>;
+			xlnx,cpu-name = "PSM";
 			xlnx,ipi-rsp-msg-buf = <0xff3f0020>;
+			#mbox-cells = <1>;
 			xlnx,ipi-id = <0>;
+			reg = <0x0 0xff310000 0x0 0x10000 0x0 0xff3f0000 0x0 0x200>;
 			xlnx,ipi-buf-index = <0x0>;
 			xlnx,ipi-req-msg-buf = <0xff3f0000>;
+			reg-names = "ctrl" , "msg";
 		};
 	};
 	&lpd_xppu {
@@ -2593,6 +3085,16 @@
 		status = "okay";
 		xlnx,ip-name = "psv_ocm_xmpu";
 		xlnx,name = "versal_ps_pspmc_0_psv_ocm_xmpu_0";
+	};
+	&pmc_cfi_cframe_0 {
+		status = "okay";
+		xlnx,ip-name = "psv_pmc_cfi_cframe";
+		xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_0";
+	};
+	&pmc_cfu_apb_0 {
+		status = "okay";
+		xlnx,ip-name = "psv_pmc_cfu_apb";
+		xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfu_apb_0";
 	};
 	&dma0 {
 		status = "okay";
@@ -2708,6 +3210,7 @@
 		xlnx,fit2-interrupt = <0>;
 		xlnx,use-fit3 = <0>;
 		xlnx,use-fit4 = <0>;
+		xlnx,io-baseaddr = <0xffffffff 0xffffffff>;
 		xlnx,uart-use-parity = <0>;
 		xlnx,lmb-dwidth = <32>;
 		xlnx,fit4-no-clocks = <6216>;
@@ -2718,6 +3221,11 @@
 		xlnx,gpo2-init = <0x0>;
 		xlnx,io-mask = <0xfffe0000>;
 		xlnx,lmb-awidth = <32>;
+	};
+	&pmc_ppu1_mdm_0 {
+		status = "okay";
+		xlnx,ip-name = "psv_pmc_ppu1_mdm";
+		xlnx,name = "versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0";
 	};
 	&qspi {
 		xlnx,is-cache-coherent = <0>;
@@ -2803,6 +3311,7 @@
 		xlnx,ip-name = "psv_pmc_sysmon";
 		#size-cells = <2>;
 		xlnx,sat-7-desc = "ME , satellite";
+		#io-channel-cells = <1>;
 		#address-cells = <2>;
 		xlnx,sat-64-desc = "PS , LPD , satellite";
 		xlnx,sat-63-x = <35>;
@@ -2828,6 +3337,12 @@
 		xlnx,sat-7-x = <3583>;
 		xlnx,sat-6-y = <5849>;
 		xlnx,name = "versal_ps_pspmc_0_psv_pmc_sysmon_0";
+	};
+	&pmc_trng {
+		xlnx,device-id = <0>;
+		status = "okay";
+		xlnx,ip-name = "psv_pmc_trng";
+		xlnx,name = "versal_ps_pspmc_0_psv_pmc_trng";
 	};
 	&pmc_xmpu {
 		status = "okay";
@@ -2953,6 +3468,10 @@
 	};
 	&gic_its {
 		status = "okay";
+	};
+	&sensor0 {
+		io-channel-names = "sysmon-temp-channel";
+		io-channels = <&sysmon0 0>;
 	};
 	&ref {
 		clock-frequency = <50000000>;
