@@ -25,6 +25,20 @@ jobs:
             kas_file: kas/scobc-v1-devgrade-ve2002.yml
             image_recipe: sc-image-minimal sc-image-dev
 
+          # AMD EDF
+          - name: scobc-v1-bootbin
+            kas_file: kas/scobc-v1-bootbin.yml
+            image_recipe: xilinx-bootbin
+          - name: scobc-v1-devgrade-bootbin
+            kas_file: kas/scobc-v1-devgrade-bootbin.yml
+            image_recipe: xilinx-bootbin
+          - name: scobc-v1-devgrade-ve2002-bootbin
+            kas_file: kas/scobc-v1-devgrade-ve2002-bootbin.yml
+            image_recipe: xilinx-bootbin
+          - name: versal-rootfs
+            kas_file: kas/versal-rootfs.yml
+            image_recipe: edf-linux-disk-image
+
     runs-on: runs-on=${{ github.run_id }}/runner=32cpu-linux-x64/family=c+m/volume=200gb/extras=s3-cache
     steps:
       - uses: runs-on/action@v2
