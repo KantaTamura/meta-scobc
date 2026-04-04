@@ -399,6 +399,16 @@
 			reg = <0x0 0xf11e0000 0x0 0x10000>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_aes";
 		};
+		versal_ps_pspmc_0_psv_pmc_analog_0: versal_ps_pspmc_0_psv_pmc_analog_0@f1160000 {
+			compatible = "xlnx,psv-pmc-analog-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_analog";
+			reg = <0x0 0xf1160000 0x0 0x30000>;
+			xlnx,npi-scan = <0>;
+			xlnx,event-log = <0>;
+			xlnx,cram-scan = <0>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_analog_0";
+		};
 		versal_ps_pspmc_0_psv_pmc_bbram_ctrl: versal_ps_pspmc_0_psv_pmc_bbram_ctrl@f11f0000 {
 			compatible = "xlnx,psv-pmc-bbram-ctrl-1.0";
 			status = "okay";
@@ -412,6 +422,111 @@
 			xlnx,ip-name = "psv_pmc_cfi_cframe";
 			reg = <0x0 0xf12d0000 0x0 0x1000>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_0";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_1: versal_ps_pspmc_0_psv_pmc_cfi_cframe_1@f12d2000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12d2000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_1";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_10: versal_ps_pspmc_0_psv_pmc_cfi_cframe_10@f12e4000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12e4000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_10";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_11: versal_ps_pspmc_0_psv_pmc_cfi_cframe_11@f12e6000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12e6000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_11";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_12: versal_ps_pspmc_0_psv_pmc_cfi_cframe_12@f12e8000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12e8000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_12";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_13: versal_ps_pspmc_0_psv_pmc_cfi_cframe_13@f12ea000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12ea000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_13";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_14: versal_ps_pspmc_0_psv_pmc_cfi_cframe_14@f12ec000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12ec000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_14";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_2: versal_ps_pspmc_0_psv_pmc_cfi_cframe_2@f12d4000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12d4000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_2";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_3: versal_ps_pspmc_0_psv_pmc_cfi_cframe_3@f12d6000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12d6000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_3";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_4: versal_ps_pspmc_0_psv_pmc_cfi_cframe_4@f12d8000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12d8000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_4";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_5: versal_ps_pspmc_0_psv_pmc_cfi_cframe_5@f12da000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12da000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_5";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_6: versal_ps_pspmc_0_psv_pmc_cfi_cframe_6@f12dc000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12dc000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_6";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_7: versal_ps_pspmc_0_psv_pmc_cfi_cframe_7@f12de000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12de000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_7";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_8: versal_ps_pspmc_0_psv_pmc_cfi_cframe_8@f12e0000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12e0000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_8";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_9: versal_ps_pspmc_0_psv_pmc_cfi_cframe_9@f12e2000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12e2000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_9";
+		};
+		versal_ps_pspmc_0_psv_pmc_cfi_cframe_bcast: versal_ps_pspmc_0_psv_pmc_cfi_cframe_bcast@f12ee000 {
+			compatible = "xlnx,psv-pmc-cfi-cframe-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_cfi_cframe";
+			reg = <0x0 0xf12ee000 0x0 0x1000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_cfi_cframe_bcast";
 		};
 		versal_ps_pspmc_0_psv_pmc_cfu_apb_0: versal_ps_pspmc_0_psv_pmc_cfu_apb_0@f12b0000 {
 			compatible = "xlnx,psv-pmc-cfu-apb-1.0";
@@ -443,6 +558,13 @@
 			xlnx,event-log = <0>;
 			xlnx,cram-scan = <0>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_global_0";
+		};
+		versal_ps_pspmc_0_psv_pmc_iou_slcr_0: versal_ps_pspmc_0_psv_pmc_iou_slcr_0@f1060000 {
+			compatible = "xlnx,psv-pmc-iou-slcr-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_iou_slcr";
+			reg = <0x0 0xf1060000 0x0 0x10000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_iou_slcr_0";
 		};
 		versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0: versal_ps_pspmc_0_psv_pmc_ppu1_mdm_0@f0310000 {
 			compatible = "xlnx,psv-pmc-ppu1-mdm-1.0";
@@ -556,6 +678,13 @@
 			xlnx,ip-name = "psv_pmc_slave_boot_stream";
 			reg = <0x0 0xf2100000 0x0 0x10000>;
 			xlnx,name = "versal_ps_pspmc_0_psv_pmc_slave_boot_stream";
+		};
+		versal_ps_pspmc_0_psv_pmc_tap: versal_ps_pspmc_0_psv_pmc_tap@f11a0000 {
+			compatible = "xlnx,psv-pmc-tap-1.0";
+			status = "okay";
+			xlnx,ip-name = "psv_pmc_tap";
+			reg = <0x0 0xf11a0000 0x0 0x20000>;
+			xlnx,name = "versal_ps_pspmc_0_psv_pmc_tap";
 		};
 		versal_ps_pspmc_0_psv_pmc_tmr_inject_0: versal_ps_pspmc_0_psv_pmc_tmr_inject_0@f0083000 {
 			compatible = "xlnx,tmr-inject-1.0";

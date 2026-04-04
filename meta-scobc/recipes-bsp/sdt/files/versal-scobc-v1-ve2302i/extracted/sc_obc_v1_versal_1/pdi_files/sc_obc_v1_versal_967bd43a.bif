@@ -39,6 +39,17 @@ new_bif:
  }
  image
  {
+  name = fpd
+  id = 0x420c003
+  partition
+  {
+   id = 0x08
+   type = cdo
+   file = gen_files/fpd_data.cdo
+  }
+ }
+ image
+ {
   name = pl_cfi
   id = 0x18700000
   partition
@@ -52,17 +63,6 @@ new_bif:
    id = 0x05
    type = cdo
    file = sc_obc_v1_versal.rnpi
-  }
- }
- image
- {
-  name = fpd
-  id = 0x420c003
-  partition
-  {
-   id = 0x08
-   type = cdo
-   file = gen_files/fpd_data.cdo
   }
  }
 }
