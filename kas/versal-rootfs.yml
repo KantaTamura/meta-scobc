@@ -1,0 +1,8 @@
+header:
+  version: 19
+  includes:
+    - kas/xilinx/v2025-1-edf.yml
+    - kas/sc/scobc.yml
+    - kas/machine/amd-cortexa72-common.yml
+    - kas/targets/edf-linux-disk-image.yml
+    - kas/conf/site.yml

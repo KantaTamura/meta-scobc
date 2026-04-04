@@ -1,0 +1,5 @@
+header:
+  version: 19
+
+target:
+  - edf-linux-disk-image

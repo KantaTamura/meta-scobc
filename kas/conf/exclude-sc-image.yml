@@ -1,0 +1,9 @@
+header:
+  version: 19
+
+local_conf_header:
+  exclude-sc-image: |
+    BBMASK:append = " \
+        /meta-scobc/recipes-core/images/sc-image-dev\.bb \
+        /meta-scobc/recipes-core/images/sc-image-minimal\.bb \
+    "

@@ -1,0 +1,8 @@
+header:
+  version: 19
+  includes:
+    - kas/xilinx/v2025-1-edf.yml
+    - kas/sc/scobc.yml
+    - kas/machine/versal-scobc-v1-ve2302i-sdt-full.yml
+    - kas/targets/xilinx-bootbin.yml
+    - kas/conf/site.yml
