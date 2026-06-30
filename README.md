@@ -1,12 +1,5 @@
 # meta-scobc
 
-## Prerequisite
-
-> [!IMPORTANT]
-> We store `.xsa` files using [Git LFS][1]. Make sure Git LFS is
-> installed; otherwise you won't get the actual `.xsa` files and the build
-> will fail.
-
 ## Setup
 
 We use [`uv`](https://github.com/astral-sh/uv) to manage the Python environment for `kas` and related tooling.
@@ -70,7 +63,6 @@ $ export SSTATE_DIR=/opt/yocto/sstate-cache
 $ kas build kas/scobc-v1-sdt.yml
 ```
 
-[1]: https://git-lfs.com/
 [m-space]: meta-scobc/conf/machine/versal-scobc-v1-ve2302i-sdt-full.conf
 [m-dev-2302]: meta-scobc/conf/machine/versal-scobc-v1-ve2302e-sdt-full.conf
 [m-dev-2002]: meta-scobc/conf/machine/versal-scobc-v1-ve2002e-sdt-full.conf
