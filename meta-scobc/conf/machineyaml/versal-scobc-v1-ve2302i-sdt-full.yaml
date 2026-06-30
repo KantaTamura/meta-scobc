@@ -1,0 +1,5 @@
+args:
+  - --hw-description https://downloads.spacecubics.com/products/scobc-v1/releases/v2026.06/sdt/versal-scobc-v1-ve2302i.tar.gz
+  - --machine-name versal-scobc-v1-ve2302i-sdt-full
+  - -c meta-scobc/conf
+  - -g full
