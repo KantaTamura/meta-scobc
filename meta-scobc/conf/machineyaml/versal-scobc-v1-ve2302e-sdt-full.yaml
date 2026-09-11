@@ -3,3 +3,10 @@ args:
   - --machine-name versal-scobc-v1-ve2302e-sdt-full
   - -c meta-scobc/conf
   - -g full
+
+machine:
+  pre:
+  post:
+    include:
+      comment: "Load the dualboot U-Boot configuration when provided by meta-scobc-dualboot"
+      op: 'conf/machine/include/${MACHINE}/uboot-config.conf'

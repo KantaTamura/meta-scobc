@@ -3,6 +3,9 @@ header:
   includes:
     - kas/xilinx/v2025-2.yml
     - kas/sc/scobc.yml
+    - kas/sc/scobc-dualboot.yml
     - kas/machine/versal-scobc-v1-ve2302i-sdt-full.yml
-    - kas/conf/dualboot/scobc-v1.yml
     - kas/targets/sc-image-bundle.yml
+    - kas/conf/hawkbit.yml
+    - kas/conf/rauc.yml
+    - kas/conf/xilinx-fpd-watchdog.yml
